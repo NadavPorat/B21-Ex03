@@ -14,17 +14,7 @@ namespace Ex03.GarageLogic
             // ElectricMotor M = new ElectricMotor();
             //Car C = new Car("Pink", 2);
             //Truck T = new Truck(true, 60);
-            Console.WriteLine("nnadvcsav");
-            Console.WriteLine("nnadvcsav");
-            Console.WriteLine("nnadvcsav");
-            Console.WriteLine("nnadvcsav");
-            Console.WriteLine("nnadvcsav");
-            Console.WriteLine("nnadvcsav");
-            Console.WriteLine("nnadvcsav");
-            Console.WriteLine("nnadvcsav");
-            Console.WriteLine("nnadvcsav");
-            Console.WriteLine("nnadvcsav");
-            Console.WriteLine("nnadvcsav");
+
         }
     }
 }
