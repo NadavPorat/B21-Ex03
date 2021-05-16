@@ -11,10 +11,10 @@ namespace Ex03.GarageLogic
         public void main()
         {
 
-           // ElectricMotor M = new ElectricMotor();
+            // ElectricMotor M = new ElectricMotor();
             //Car C = new Car("Pink", 2);
-             //Truck T = new Truck(true, 60);
-
+            //Truck T = new Truck(true, 60);
+            Console.WriteLine("nnadvcsav");
         }
     }
 }
