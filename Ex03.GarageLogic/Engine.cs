@@ -3,7 +3,7 @@
 
 namespace Ex03.GarageLogic
 {
-    class Engine
+    public abstract class Engine
     {
     }
 }

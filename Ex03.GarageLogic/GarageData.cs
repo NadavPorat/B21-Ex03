@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class Program
+    public class GarageData
     {
-      
-        
+        private List<VehicleInfo> list;
+
+        public GarageData()
+        {
+
+        }
+
     }
 }

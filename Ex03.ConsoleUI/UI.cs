@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex03.GarageLogic
+namespace Ex03.ConsoleUI
 {
-    class Program
+    public class UI
     {
-      
-        
+
     }
 }

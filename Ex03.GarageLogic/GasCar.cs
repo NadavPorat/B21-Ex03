@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class Program
+    public class GasCar: Car
     {
-      
-        
+        public GasCar(): base(new Gasoline(Gasoline.EGasType.Octan95,45))
+        {
+
+        }
     }
 }

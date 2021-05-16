@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    abstract class Vehicle
+    public abstract class Vehicle
     {
         private string m_VehicleModel;
         private string m_VehicleLicensePlate;
@@ -28,10 +28,16 @@ namespace Ex03.GarageLogic
             m_WheelsList = new List<Wheel>();
         }
 
-        public Vehicle(int i_NumOfWheels, int i_MaxWheelsPressure, Engine i_Engine)
+        public Vehicle(int i_NumOfWheels, float i_MaxWheelsPressure, Engine i_Engine)
         {
-            m_WheelsList = new List<Wheel>(i_NumOfWheels);
-            
+            m_WheelsList = new List<Wheel>();
+
+            for (int i = 0; i < i_NumOfWheels; i++)
+            {
+                m_WheelsList.Add(new Wheel(i_MaxWheelsPressure));
+            }
+
+            m_EngineType = i_Engine;
         }
     }
 }

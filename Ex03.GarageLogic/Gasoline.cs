@@ -9,6 +9,12 @@ namespace Ex03.GarageLogic
         private float m_CurrGasAmount;
         private float m_MaxGasAmount;
 
+        public Gasoline(EGasType i_GasType, float i_MaxGasAmount)
+        {
+            m_GasType = i_GasType;
+            m_MaxGasAmount = i_MaxGasAmount;
+        }
+
         public Gasoline(EGasType i_GasType, float i_CurrGasAmount, float i_MaxGasAmount)
         {
             m_GasType = i_GasType;

@@ -3,7 +3,7 @@
 
 namespace Ex03.GarageLogic
 {
-    internal class Motorcycle : Vehicle
+    public class Motorcycle : Vehicle
     {
         private string m_LicenseType;
         private int m_EngineCapacity;
@@ -14,7 +14,7 @@ namespace Ex03.GarageLogic
         //    m_EngineCapacity = i_EngineCapacity;
         //}
 
-        public Motorcycle(int i_NumOfWheels, int i_MaxWheelsPressure, Engine i_EngineType) : base(i_NumOfWheels, i_MaxWheelsPressure, i_EngineType)
+        public Motorcycle(Engine i_EngineType) : base(2, 30, i_EngineType)
         {
         }
     }
