@@ -16,6 +16,15 @@ namespace Ex03.GarageLogic
             //Truck T = new Truck(true, 60);
 
             Console.WriteLine("hi!");
+            Console.WriteLine("hi!");
+            Console.WriteLine("hi!");
+            Console.WriteLine("hi!");
+            Console.WriteLine("hi!");
+            Console.WriteLine("hi!");
+            Console.WriteLine("hi!");
+            Console.WriteLine("hi!");
+            Console.WriteLine("hi!");
+            Console.WriteLine("hi!");
 
         }
         
