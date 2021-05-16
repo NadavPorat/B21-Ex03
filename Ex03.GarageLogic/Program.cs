@@ -15,6 +15,9 @@ namespace Ex03.GarageLogic
             //Car C = new Car("Pink", 2);
             //Truck T = new Truck(true, 60);
 
+            Console.WriteLine("hi!");
+
         }
+        
     }
 }
