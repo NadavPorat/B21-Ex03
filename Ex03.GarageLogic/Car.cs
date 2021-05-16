@@ -3,7 +3,7 @@
 
 namespace Ex03.GarageLogic
 {
-    internal class Car : Vehicle
+    public class Car : Vehicle
     {
         private string m_CarColor;
         private int m_NumOfDoors;
@@ -12,6 +12,11 @@ namespace Ex03.GarageLogic
         {
             m_CarColor = i_CarColor;
             m_NumOfDoors = i_NumDoors;
+        }
+
+        public Car(Engine i_EngineType) : base(4, 32, i_EngineType)
+        {
+
         }
     }
 }

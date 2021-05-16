@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class Program
+    public class ElectricCar: Car
     {
-      
-        
+        public ElectricCar(): base(new Electric(3.2f))
+        {
+
+        }
     }
 }

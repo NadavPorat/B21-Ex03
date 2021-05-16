@@ -8,9 +8,8 @@ namespace Ex03.GarageLogic
         private float m_LeftBatteryTime; //inHours
         private float m_MaxBatteryTime; //inHours
 
-        public Electric(float i_MaxBatteryTime,float i_LeftBatteryTime)
+        public Electric(float i_MaxBatteryTime)
         {
-            m_LeftBatteryTime = i_LeftBatteryTime;
             m_MaxBatteryTime = i_MaxBatteryTime;
         }
 
