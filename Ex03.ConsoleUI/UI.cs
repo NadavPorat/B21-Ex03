@@ -64,12 +64,41 @@ namespace Ex03.ConsoleUI
 
         public string GetModelName()
         {
-            return "mazda";
+            string modelNmae;
+
+            Console.WriteLine("Plase Enter Modle Nmaee: ");
+            Console.WriteLine();
+            modelNmae = Console.ReadLine();
+
+            return modelNmae;
         }
 
         public float GetAirPressure()
         {
-            return 2.3f;
+
+            string currAir;
+            
+            Console.WriteLine("Plase Enter Current Air Pressure: ");
+            Console.WriteLine();
+
+            currAir = Console.ReadLine();
+            float FcurrAir=float.Parse(currAir);
+
+            return FcurrAir;
+        }
+
+        public float GetLeftPowerAmount()
+        {
+
+            string LeftPowerAmount;
+
+            Console.WriteLine("Plase Enter Current Air Pressure: ");
+            Console.WriteLine();
+
+            LeftPowerAmount = Console.ReadLine();
+            float FLeftPower = float.Parse(LeftPowerAmount);
+
+            return FLeftPower;
         }
     }
 }

@@ -59,5 +59,10 @@ namespace Ex03.GarageLogic
                 wheel.AirPressure = i_CurrAirPressure;
             }
         }
+
+        public void SetCurrEnergyAmount(float i_CurrEnragy)
+        {
+            m_CurrEnergyPercentage = i_CurrEnragy;
+        }
     }
 }
