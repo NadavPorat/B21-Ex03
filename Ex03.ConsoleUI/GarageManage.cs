@@ -20,17 +20,83 @@ namespace Ex03.ConsoleUI
 
         public void InsertVehicle()
         {
-            //m_UI.GetVehicleType();
+            Vehicle v = Creator.Create(m_UI.GetVehicleType());
+            VehicleInfo vInfo = new VehicleInfo(v);
+            ValidationLoop(EInfoType.ModelName, v);
+            ValidationLoop(EInfoType.OwnerName, v);
+            ValidationLoop(EInfoType.OwnerPhone, v);
+            ValidationLoop(EInfoType.PlateNumber, v);
 
+            
 
+        }
 
+        public void ValidationLoop(EInfoType i_InfoToAsk, Vehicle v)
+        {
+            bool goodInput = false;
 
+            while (!goodInput)
+            {
+                try
+                {
+                    switch (i_InfoToAsk)
+                    {
+                        case EInfoType.ModelName:
+                            {
+                                v.VehicleModel = m_UI.GetModelName();
+                                break;
+                            }
 
-           // m_Data.InsertVehicle();
+                        case EInfoType.CurrWheelsAirPressure :
+                            {
+                                v.SetCurrWheelsAirPressure(m_UI.GetAirPressure());
+                                break;
+                            }
 
+                        case EInfoType.LeftPowerAmount:
+                            {
+                                break;
+                            }
+
+                        case EInfoType.OwnerName:
+                            {
+                                break;
+                            }
+
+                        case EInfoType.OwnerPhone:
+                            {
+                                break;
+                            }
+
+                        case EInfoType.PlateNumber:
+                            {
+                                break;
+                            }
+
+                        case EInfoType.WheelsManufactor:
+                            {
+                                break;
+                            }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    goodInput = false;
+                }
+            }
         }
     
         
-
+         public enum EInfoType
+        {
+            ModelName,
+            PlateNumber,
+            LeftPowerAmount,
+            WheelsManufactor,
+            CurrWheelsAirPressure,
+            OwnerName,
+            OwnerPhone
+        }
     }
 }

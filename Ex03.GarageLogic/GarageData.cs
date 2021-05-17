@@ -15,5 +15,10 @@ namespace Ex03.GarageLogic
 
         }
 
+        public void UpdateModelName(string i_ModelName)
+        {
+
+        }
+
     }
 }
