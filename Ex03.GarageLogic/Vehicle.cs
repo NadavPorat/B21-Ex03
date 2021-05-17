@@ -52,6 +52,18 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public string VehicleLicensePlate
+        {
+            get
+            {
+                return m_VehicleLicensePlate;
+            }
+            set
+            {
+                m_VehicleLicensePlate = value;
+            }
+        }
+
         public void SetCurrWheelsAirPressure(float i_CurrAirPressure)
         {
             foreach (Wheel wheel in m_WheelsList)
@@ -68,6 +80,19 @@ namespace Ex03.GarageLogic
         public void SetmVehicleLicensePlate(string i_LicensePlate)
         {
             m_VehicleLicensePlate = i_LicensePlate;
+        }
+
+        public void Refuel(float i_amountOfFuel)
+        {
+            if (m_EngineType is Electric)
+            {
+               
+             // m_EngineType
+            }
+            else
+            {
+             // Fuel
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Ex03.GarageLogic
             m_MaxGasAmount = i_MaxGasAmount;
         }
 
-        internal void Fuel(float i_GassToAdd, EGasType i_GasType)
+        internal void RefillEnergy(float i_GassToAdd, EGasType i_GasType)
         {
             if(m_GasType==i_GasType)
             {
