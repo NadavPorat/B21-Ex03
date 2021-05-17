@@ -100,6 +100,44 @@ namespace Ex03.ConsoleUI
 
             return FLeftPower;
         }
+
+
+        public string GetVehicleLicensePlate()
+        {
+            string VehicleLicensePlate;
+
+            Console.WriteLine("Plase Enter Vehicle License Plate: ");
+            Console.WriteLine();
+            VehicleLicensePlate = Console.ReadLine();
+
+            return VehicleLicensePlate;
+        }
+
+        ////////////////////////// Car Info//////////////////////////////////////////
+
+
+        public string GetVehicleOwnerName()
+        {
+            string ownerName;
+
+            Console.WriteLine("Plase Enter Onwer Name: ");
+            Console.WriteLine();
+            ownerName = Console.ReadLine();
+
+            return ownerName;
+        }
+
+        public string GetVehicleOwnerPhone()
+        {
+            string ownerPhone;
+
+            Console.WriteLine("Plase Enter Onwer Phone: ");
+            Console.WriteLine();
+            ownerPhone = Console.ReadLine();
+
+            return ownerPhone;
+        }
+
     }
 }
 

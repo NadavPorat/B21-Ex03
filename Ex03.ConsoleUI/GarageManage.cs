@@ -61,16 +61,19 @@ namespace Ex03.ConsoleUI
 
                         case EInfoType.OwnerName:
                             {
+                                
                                 break;
                             }
 
                         case EInfoType.OwnerPhone:
                             {
+                                
                                 break;
                             }
 
                         case EInfoType.PlateNumber:
                             {
+                                v.SetmVehicleLicensePlate(m_UI.GetVehicleLicensePlate();
                                 break;
                             }
 
