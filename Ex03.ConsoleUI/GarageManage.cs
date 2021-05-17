@@ -55,6 +55,7 @@ namespace Ex03.ConsoleUI
 
                         case EInfoType.LeftPowerAmount:
                             {
+                                v.SetCurrEnergyAmount(m_UI.GetLeftPowerAmount());
                                 break;
                             }
 
