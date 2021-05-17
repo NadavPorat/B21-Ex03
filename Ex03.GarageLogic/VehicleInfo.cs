@@ -31,6 +31,14 @@ namespace Ex03.GarageLogic
             m_VehicleStatus = EVehicleStatus.InProcces;
             m_Vehicle = i_Vehicle;
         }
-
+        
+        public void SetVhicleoWnerName(string i_OwnerName)
+        {
+            m_OwnerName = i_OwnerName;
+        }
+        public void SetVhicleOwnerPhone(string i_OwnerPhone)
+        {
+            m_OwnerPhone = i_OwnerPhone;
+        }
     }
 }

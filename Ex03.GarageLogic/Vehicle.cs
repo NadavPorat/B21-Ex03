@@ -64,5 +64,10 @@ namespace Ex03.GarageLogic
         {
             m_CurrEnergyPercentage = i_CurrEnragy;
         }
+
+        public void SetmVehicleLicensePlate(string i_LicensePlate)
+        {
+            m_VehicleLicensePlate = i_LicensePlate;
+        }
     }
 }
