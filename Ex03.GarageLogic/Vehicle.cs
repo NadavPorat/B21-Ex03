@@ -39,5 +39,25 @@ namespace Ex03.GarageLogic
 
             m_EngineType = i_Engine;
         }
+
+        public string VehicleModel 
+        {
+            get
+            {
+                return m_VehicleModel;
+            }
+            set
+            {
+                m_VehicleModel = value;
+            }
+        }
+
+        public void SetCurrWheelsAirPressure(float i_CurrAirPressure)
+        {
+            foreach (Wheel wheel in m_WheelsList)
+            {
+                wheel.AirPressure = i_CurrAirPressure;
+            }
+        }
     }
 }

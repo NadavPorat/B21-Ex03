@@ -6,8 +6,21 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class Creator
+    public class Creator
     {
+        public enum EVehicleType
+        {
+            ElectricMotor,
+            GasMotor,
+            ElectricCar,
+            GasCar,
+            Truck
+        }
+
+        public static Vehicle Create(EVehicleType i_VehicleType)
+        {
+            return new ElectricMotor();
+        }
 
     }
 }
