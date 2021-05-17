@@ -11,6 +11,19 @@ namespace Ex03.ConsoleUI
     public class UI
     {
 
+        public static void Menu()
+        {
+            Console.WriteLine("What would you like to do? Write the given number and press enter:");
+            Console.WriteLine("1. Add a new vehicle");
+            Console.WriteLine("2. Display a list of license numbers in the garage");
+            Console.WriteLine("3. Change a vehicle's status");
+            Console.WriteLine("4. Inflate a vehicle's tires to maximum");
+            Console.WriteLine("5. Refuel a fuel-based vehicle");
+            Console.WriteLine("6. Charge an electric-based vehicle");
+            Console.WriteLine("7. Display vehicle information");
+            Console.WriteLine("8. Exit");
+        }
+
         public Creator.EVehicleType GetVehicleType()
         {
             string choice;
@@ -56,10 +69,6 @@ namespace Ex03.ConsoleUI
 
         }
 
-        public void GetVehicleDetailes()
-        {
-
-        }
 
 
         public string GetModelName()

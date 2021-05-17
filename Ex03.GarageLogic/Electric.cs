@@ -13,9 +13,9 @@ namespace Ex03.GarageLogic
             m_MaxBatteryTime = i_MaxBatteryTime;
         }
 
-        internal void Charge(float i_HoursToAdd)
+        public void RefillEnergy(float i_HoursToAdd) 
         {
-            if(m_MaxBatteryTime>= m_LeftBatteryTime+i_HoursToAdd)
+            if (m_MaxBatteryTime >= m_LeftBatteryTime + i_HoursToAdd)
             {
                 m_LeftBatteryTime = m_LeftBatteryTime + i_HoursToAdd;
             }
