@@ -10,9 +10,16 @@ namespace Ex03.GarageLogic
     {
         private Dictionary<string, VehicleInfo> m_VehicleList;
 
+
+
         public GarageData()
         {
             m_VehicleList = new Dictionary<string, VehicleInfo>();
+        }
+
+        public Dictionary<string, VehicleInfo> GetListOfVeihcleInTheGarage()
+        {
+            return m_VehicleList;
         }
 
         public bool Contains(string i_LicenseNumber)
@@ -32,5 +39,21 @@ namespace Ex03.GarageLogic
         {
             m_VehicleList.Add(i_VehicleInfo.vehicle.LicensePlate, i_VehicleInfo);
         }
+        public List<VehicleInfo> GetListVehiclesBySatatus(EVehicleStatus i_EVehicleStatus)
+        {
+            List <VehicleInfo> ListOfVehicles = new List<VehicleInfo>();
+
+            foreach (VehicleInfo currVale in m_VehicleList.Values)
+            {
+                if(currVale.Status.GetType()== i_EVehicleStatus.GetType())
+                {
+                    ListOfVehicles.Add(currVale);
+                }
+              
+            }
+            return ListOfVehicles;
+        }
+
+
     }
 }

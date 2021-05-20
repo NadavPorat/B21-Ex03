@@ -36,7 +36,8 @@ namespace Ex03.ConsoleUI
                         }
                     case 2:
                         {
-
+                            m_UI.DisplayLicensePlates(m_Data);
+                            
                             break;
                         }
                     case 3:
