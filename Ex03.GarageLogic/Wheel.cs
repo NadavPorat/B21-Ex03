@@ -37,6 +37,18 @@ namespace Ex03.GarageLogic
             }
         }
 
+        internal string Manufaturer
+        {
+            get
+            {
+                return m_ManufacturerName;
+            }
+            set
+            {
+                m_ManufacturerName = value;
+            }
+        }
+
         internal void inflate(float i_AirToAdd)
         {
             if(m_MaxAirPressure<=(m_CurrAirPressure+i_AirToAdd))
