@@ -10,8 +10,6 @@ namespace Ex03.GarageLogic
     {
         private Dictionary<string, VehicleInfo> m_VehicleList;
 
-
-
         public GarageData()
         {
             m_VehicleList = new Dictionary<string, VehicleInfo>();
@@ -27,13 +25,20 @@ namespace Ex03.GarageLogic
             return m_VehicleList.ContainsKey(i_LicenseNumber);
         }
 
+
         public VehicleInfo FindVehicle(string i_LicenseNumber)
         {
             VehicleInfo VehicleInfo = null;
-            bool isVehicle = m_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo);
-
-            return VehicleInfo;
+            if( m_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo))
+            {
+                return VehicleInfo;
+            }
+            else
+            {
+                throw (new ArgumentException("The Vehcle Not Exist"));
+            }
         }
+
 
         public void Insert(VehicleInfo i_VehicleInfo)
         {
@@ -69,6 +74,18 @@ namespace Ex03.GarageLogic
                 }
             
             return s;
+
+        }
+
+        public void FulllGas(string i_VehicleLicensePlate, string i_GasType, float i_ToAdd)
+        {
+            VehicleInfo currVehicleInfo = FindVehicle(i_VehicleLicensePlate);
+            currVehicleInfo.vehicle.RefillGasVehicle(i_ToAdd, i_GasType);
+        }
+
+        public void FulllElectric(string i_VehicleLicensePlate, float i_ToAdd)
+        {
+            FindVehicle(i_VehicleLicensePlate).vehicle.RefillElctricVehicle(i_ToAdd);
 
         }
     }
