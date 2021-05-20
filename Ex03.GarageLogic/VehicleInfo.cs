@@ -3,11 +3,9 @@
 
 namespace Ex03.GarageLogic
 {
-
     public class VehicleInfo
     {
-
-          public enum EVehicleStatus
+        public enum EVehicleStatus
         {
             InProcces=1,
             Fixed,
@@ -51,8 +49,6 @@ namespace Ex03.GarageLogic
         {
             m_VehicleStatus = EVehicleStatus.InProcces;
         }
-
-
 
         public Vehicle vehicle
         {
