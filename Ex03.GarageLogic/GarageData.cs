@@ -54,7 +54,7 @@ namespace Ex03.GarageLogic
         //    }
         //    return listOfVehicles;
         //}
-        public string GetListLicensePlateVehiclesByStatus(EVehicleStatus i_EVehicleStatus)
+        public string GetListLicensePlateVehiclesByStatus(VehicleInfo.EVehicleStatus i_EVehicleStatus)
         {
             string s = "";
             int countVehicle = 1;
