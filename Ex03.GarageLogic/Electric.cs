@@ -23,7 +23,14 @@ namespace Ex03.GarageLogic
 
         public override void SetCurrPower(float i_CurrPower)
         {
-            m_LeftBatteryTime = i_CurrPower;
+            if (i_CurrPower <= m_MaxBatteryTime)
+            {
+                m_LeftBatteryTime = i_CurrPower;
+            }
+            else
+            {
+                throw new ValueOutOfRangeException("Value is Out Of Range", 0, m_MaxBatteryTime);
+            }
         }
 
     }

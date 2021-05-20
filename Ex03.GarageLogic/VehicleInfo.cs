@@ -3,14 +3,16 @@
 
 namespace Ex03.GarageLogic
 {
-    public enum EVehicleStatus
-    {
-        InProcces = 1,
-        Fixed,
-        Paid
-    }
+
     public class VehicleInfo
     {
+
+          public enum EVehicleStatus
+        {
+            InProcces=1,
+            Fixed,
+            Paid
+        }
 
         private string m_OwnerName;
         private string m_OwnerPhone;
@@ -68,7 +70,7 @@ namespace Ex03.GarageLogic
             }
         }
         
-        public string VehicleOwnePhone
+        public string VehicleOwnerPhone
         {
             set
             {
@@ -88,7 +90,7 @@ namespace Ex03.GarageLogic
         
         public void SetWheelsCurrAirPressure(float i_CurrAirPressure)
         {
-            m_Vehicle.CurrWheelsAirPressure = i_CurrAirPressure;
+            m_Vehicle.CurrWheelsAirPressure=i_CurrAirPressure;
         }
 
         

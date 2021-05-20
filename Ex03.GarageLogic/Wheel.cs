@@ -32,7 +32,7 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    throw new Exception ();
+                    throw new ValueOutOfRangeException("Value is Over The MAX", 0, m_MaxAirPressure);
                 }
             }
         }
