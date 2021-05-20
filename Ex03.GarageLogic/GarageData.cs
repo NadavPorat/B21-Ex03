@@ -45,7 +45,7 @@ namespace Ex03.GarageLogic
 
             foreach (VehicleInfo currVale in m_VehicleList.Values)
             {
-                if(currVale.Status.GetType()== i_EVehicleStatus.GetType())
+                if (currVale.Status.Equals( i_EVehicleStatus))
                 {
                     ListOfVehicles.Add(currVale);
                 }
