@@ -3,15 +3,14 @@
 
 namespace Ex03.GarageLogic
 {
+    public enum EVehicleStatus
+    {
+        InProcces = 1,
+        Fixed,
+        Paid
+    }
     public class VehicleInfo
     {
-        public enum EVehicleStatus
-        {
-            InProcces=1,
-            Fixed,
-            Paid
-        }
-
 
         private string m_OwnerName;
         private string m_OwnerPhone;
@@ -34,22 +33,24 @@ namespace Ex03.GarageLogic
             m_Vehicle = i_Vehicle;
         }
 
-        //public EVehicleStatus Status
-        //{
-        //    get
-        //    {
-        //        return m_VehicleStatus;
-        //    }
-        //    set
-        //    {
-        //        m_VehicleStatus = value;
-        //    }
-        //}
+        public EVehicleStatus Status
+        {
+            get
+            {
+                return m_VehicleStatus;
+            }
+            set
+            {
+                m_VehicleStatus = value;
+            }
+        }
 
-       public void SetInProccesStatus()
+        public void SetInProccesStatus()
         {
             m_VehicleStatus = EVehicleStatus.InProcces;
         }
+
+
 
         public Vehicle vehicle
         {

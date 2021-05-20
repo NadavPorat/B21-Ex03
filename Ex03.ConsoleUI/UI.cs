@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Ex03.GarageLogic;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
-using Ex03.GarageLogic;
+using System.Text;
 
 namespace Ex03.ConsoleUI
 {
@@ -24,6 +22,84 @@ namespace Ex03.ConsoleUI
 6. Charge an electric-based vehicle
 7. Display vehicle information
 8. Exit");
+
+        }
+        public enum EVehicleStatus
+        {
+            InProcces = 1,
+            Fixed,
+            Paid
+        }
+        public void DisplayLicensePlates(GarageData i_Data)
+        {
+            string choice;
+            int choiseNum = 0;
+            int numToPrint = 1;
+
+            Console.WriteLine("Hi! Here is The List Of Vehicles In The Garage: ");
+            foreach (string key in i_Data.GetListOfVeihcleInTheGarage().Keys)
+            {
+                Console.WriteLine(key);
+            }
+            Console.WriteLine();
+            String s = string.Format("{0}", "You Can Filtering By Current Satatus Or Continue: ");
+
+            foreach (string vType in Enum.GetNames(typeof(EVehicleStatus)))
+            {
+                s += string.Format("\n {0}. {1} ", numToPrint, vType);
+                numToPrint++;
+            }
+            s += string.Format("\n {0}. {1} ", numToPrint, "Continue");
+
+            choice = Console.ReadLine();
+            choiseNum = int.Parse(choice);
+
+            if (choiseNum >=  1 || choiseNum <= 3)
+            {
+                PrintListVehcleBySatatus(choiseNum, i_Data);
+            }
+            
+           
+
+        }
+
+       public void PrintListVehcleBySatatus(int i_ChoiseNum, GarageData i_Data)
+        {
+            StringBuilder fillterSatatusVehicles = new StringBuilder();
+            List<VehicleInfo> ListVehiclesBySatatus = new List<VehicleInfo>();
+           int numToPrint = 1;
+
+            switch (i_ChoiseNum)
+            {
+                case 1:
+                    {
+
+                        fillterSatatusVehicles.AppendLine("Vehicles in Procces : ");
+                        ListVehiclesBySatatus = i_Data.GetListVehiclesBySatatus((GarageLogic.EVehicleStatus)EVehicleStatus.InProcces);
+                        break;
+                    }
+                case 2:
+                    {
+                        fillterSatatusVehicles.AppendLine("Fixed Vehicles: ");
+                        ListVehiclesBySatatus = i_Data.GetListVehiclesBySatatus((GarageLogic.EVehicleStatus)EVehicleStatus.Fixed);
+                        break;
+                    }
+                case 3:
+                    {
+
+                        fillterSatatusVehicles.AppendLine("Paid Vehicles : ");
+                        ListVehiclesBySatatus = i_Data.GetListVehiclesBySatatus((GarageLogic.EVehicleStatus)EVehicleStatus.Paid);
+                        break;
+                    }
+
+            }
+            foreach (VehicleInfo info in ListVehiclesBySatatus)
+            {
+                fillterSatatusVehicles.AppendFormat("{0}. {1}.", numToPrint.ToString(), info.vehicle.LicensePlate);
+                fillterSatatusVehicles.AppendLine();
+                numToPrint++;
+            }
+            Console.WriteLine(fillterSatatusVehicles);
 
         }
 
