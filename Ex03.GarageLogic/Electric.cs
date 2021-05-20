@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.Reflection;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -13,12 +14,26 @@ namespace Ex03.GarageLogic
             m_MaxBatteryTime = i_MaxBatteryTime;
         }
 
-        public void RefillEnergy(float i_HoursToAdd) 
+        public override void RefillEnergy(float i_HoursToAdd) 
         {
             if (m_MaxBatteryTime >= m_LeftBatteryTime + i_HoursToAdd)
             {
                 m_LeftBatteryTime = m_LeftBatteryTime + i_HoursToAdd;
             }
+        }
+        public override StringBuilder GetDetails()
+        {
+            StringBuilder toDisplay = new StringBuilder();
+            Type vehicleType = GetType();
+
+            foreach (FieldInfo f in vehicleType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            {
+                int idx = f.ToString().IndexOf("_");
+                string memberName = f.ToString().Substring(idx + 1);
+                toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
+            }
+
+            return toDisplay;
         }
 
         public override void SetCurrPower(float i_CurrPower)

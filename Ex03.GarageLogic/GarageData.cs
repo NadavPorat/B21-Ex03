@@ -10,8 +10,6 @@ namespace Ex03.GarageLogic
     {
         private Dictionary<string, VehicleInfo> m_VehicleList;
 
-
-
         public GarageData()
         {
             m_VehicleList = new Dictionary<string, VehicleInfo>();
@@ -30,14 +28,25 @@ namespace Ex03.GarageLogic
         public VehicleInfo FindVehicle(string i_LicenseNumber)
         {
             VehicleInfo VehicleInfo = null;
-            bool isVehicle = m_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo);
 
-            return VehicleInfo;
+            if (m_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo))
+            {
+                return VehicleInfo;
+            }
+            else
+            {
+                throw new ArgumentException("Vehicle NOT Exist");
+            }
         }
 
         public void Insert(VehicleInfo i_VehicleInfo)
         {
             m_VehicleList.Add(i_VehicleInfo.vehicle.LicensePlate, i_VehicleInfo);
+        }
+
+        public StringBuilder GetVehicleInfoString(string i_LicensePlate)
+        {
+           return FindVehicle(i_LicensePlate).GetCard();
         }
 
         //internal List<VehicleInfo> GetListVehiclesByStatus(EVehicleStatus i_EVehicleStatus)
@@ -69,7 +78,12 @@ namespace Ex03.GarageLogic
                 }
             
             return s;
+        }
 
+        public void InflateWheelsToMax(string i_LicensePlate)
+        {
+            VehicleInfo v = FindVehicle(i_LicensePlate);
+            v.vehicle.InflateWheels();
         }
     }
 }

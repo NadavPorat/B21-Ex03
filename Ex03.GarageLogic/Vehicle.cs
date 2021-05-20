@@ -83,14 +83,9 @@ namespace Ex03.GarageLogic
                 return m_EngineType;
             }
         }
-        
 
         public string WheelsManufacturer
         {
-            get
-            {
-                return m_WheelsList[0].Manufaturer;
-            }
             set
             {
                 foreach (Wheel wheel in m_WheelsList)
@@ -100,17 +95,49 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void Refuel(float i_amountOfFuel)
+        public void InflateWheels()
         {
-            if (m_EngineType is Electric)
+            foreach (Wheel wheel in m_WheelsList)
             {
-               
-             // m_EngineType
+                wheel.AirPressure = wheel.MaxAirPressure;
             }
-            else
+        }
+
+        public StringBuilder GetDetails()
+        {
+            StringBuilder toDisplay= new StringBuilder();
+            Type vehicleType = GetType();
+
+            foreach (FieldInfo f in vehicleType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
             {
-             // Fuel
+                if (f.FieldType == typeof(Engine))
+                {
+                    toDisplay.Append(m_EngineType.GetDetails());
+                }
+                else
+                {
+                    int idx = f.ToString().IndexOf("_");
+                    string memberName = f.ToString().Substring(idx + 1);
+                    toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
+                }
             }
+
+
+            foreach(FieldInfo f in typeof(Vehicle).GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            {
+                if (f.FieldType == typeof(Engine))
+                {
+                    toDisplay.Append(m_EngineType.GetDetails());
+                }
+                else
+                {
+                    int idx = f.ToString().IndexOf("_");
+                    string memberName = f.ToString().Substring(idx + 1);
+                    toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
+                }
+            }
+
+            return toDisplay;
         }
 
         public abstract void SetInfo(FieldInfo i_FieldInfo, Object i_ValueToPut);
