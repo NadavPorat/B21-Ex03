@@ -30,30 +30,46 @@ namespace Ex03.GarageLogic
         public VehicleInfo FindVehicle(string i_LicenseNumber)
         {
             VehicleInfo VehicleInfo = null;
-            bool isVehicle = m_VehicleList.TryGetValue(i_LicenseNumber, out  VehicleInfo);
+            bool isVehicle = m_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo);
 
             return VehicleInfo;
         }
-       
+
         public void Insert(VehicleInfo i_VehicleInfo)
         {
             m_VehicleList.Add(i_VehicleInfo.vehicle.LicensePlate, i_VehicleInfo);
         }
-        public List<VehicleInfo> GetListVehiclesBySatatus(EVehicleStatus i_EVehicleStatus)
+
+        //internal List<VehicleInfo> GetListVehiclesByStatus(EVehicleStatus i_EVehicleStatus)
+        //{
+        //    List<VehicleInfo> listOfVehicles = new List<VehicleInfo>();
+
+        //    foreach (VehicleInfo currVale in m_VehicleList.Values)
+        //    {
+        //        if (currVale.Status.Equals( i_EVehicleStatus))
+        //        {
+        //            listOfVehicles.Add(currVale);
+        //        }
+
+        //    }
+        //    return listOfVehicles;
+        //}
+        public string GetListLicensePlateVehiclesByStatus(EVehicleStatus i_EVehicleStatus)
         {
-            List <VehicleInfo> ListOfVehicles = new List<VehicleInfo>();
-
-            foreach (VehicleInfo currVale in m_VehicleList.Values)
-            {
-                if (currVale.Status.Equals( i_EVehicleStatus))
+            string s = "";
+            int countVehicle = 1;
+                foreach (VehicleInfo currVale in m_VehicleList.Values)
                 {
-                    ListOfVehicles.Add(currVale);
+                    if (currVale.Status.Equals(i_EVehicleStatus))
+                    {
+                        s += string.Format("{0}. {1}\n", countVehicle, currVale.vehicle.LicensePlate);
+                        countVehicle++;
+                    }
+
                 }
-              
-            }
-            return ListOfVehicles;
+            
+            return s;
+
         }
-
-
     }
 }
