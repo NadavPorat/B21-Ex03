@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Ex03.GarageLogic;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
-using Ex03.GarageLogic;
+using System.Text;
 
 namespace Ex03.ConsoleUI
 {
@@ -12,6 +10,7 @@ namespace Ex03.ConsoleUI
     {
         public  void Menu()
         {
+           
             Console.WriteLine(
 @"Please Choose :
 1. Add a new vehicle
@@ -22,6 +21,66 @@ namespace Ex03.ConsoleUI
 6. Charge an electric-based vehicle
 7. Display vehicle information
 8. Exit");
+
+        }
+        public enum EVehicleStatus
+        {
+            InProcces = 1,
+            Fixed,
+            Paid
+        }
+        public void DisplayLicensePlates(GarageData i_Data)
+        {
+            string choice;
+            string strOut = "";
+            int choiseNum = 0;
+   
+
+            Console.WriteLine("Hi! Choose Which Vehicle You Want To See: ");
+            Console.Write("\n 0. List Of All Vehcles");
+            PrintStatus();
+            Console.WriteLine(strOut);
+            choice = Console.ReadLine();
+            choiseNum = int.Parse(choice);
+
+            if(choiseNum == 0)
+            {
+              
+                int numToPrint = 1;
+                foreach (string key in i_Data.GetListOfVeihcleInTheGarage().Keys)
+                {
+                    strOut += string.Format("\n {0}. {1} ", numToPrint, key);
+                    numToPrint++;
+                }
+                Console.WriteLine(strOut);
+            }
+            else
+            {
+                PrintListVehcleByStatus(choiseNum, i_Data);
+            }
+
+        }
+        
+       public void PrintListVehcleByStatus(int i_ChoiseNum, GarageData i_Data)
+        {
+            EVehicleStatus eChoiseSatatus = (EVehicleStatus)i_ChoiseNum;
+            string strOut =FixNameToPrint( eChoiseSatatus.ToString());
+            strOut += " Vehicles: ";
+
+
+            string listVehcle = i_Data.GetListLicensePlateVehiclesByStatus((GarageLogic.EVehicleStatus)(eChoiseSatatus));
+
+           
+            if (listVehcle.Length == 0)
+            {
+                Console.WriteLine("No Vehcles In This Status\n");
+            }
+            else
+            {
+                Console.WriteLine(strOut);
+                Console.WriteLine(listVehcle);
+
+            }
 
         }
 
@@ -57,7 +116,9 @@ namespace Ex03.ConsoleUI
            
             foreach(string vType in Enum.GetNames(typeof(Creator.EVehicleType)))
             {
-                s += string.Format("\n {0}. {1} " , numToPrint, vType);
+                string fixName;
+                fixName = FixNameToPrint(vType);
+                s += string.Format("\n {0}. {1} " , numToPrint, fixName);
                 numToPrint++;
             }
 
@@ -106,7 +167,11 @@ namespace Ex03.ConsoleUI
             return choise;
         }
 
-        private string GetOnlyDigitsString()
+
+         private string GetOnlyDigitsString()
+
+
+        public float GetLeftPowerAmount()
         {
             bool goodInput = false;
             string userInput = Console.ReadLine();
@@ -137,7 +202,9 @@ namespace Ex03.ConsoleUI
 
         public void GetInfo(FieldInfo i_info, ref object io_ChoiseToReturn)
         {
-            string toAskUser = string.Format(@"Please Enter {0} :", i_info.Name);
+            string fixName;
+            fixName=FixNameToPrint(i_info.Name);
+            string toAskUser = string.Format(@"Please Enter {0} :", fixName);
 
             if (i_info.FieldType.IsEnum)
             {
@@ -273,7 +340,38 @@ namespace Ex03.ConsoleUI
             return userInput;
         }
 
-        public string GetVehicleLicensePlate()
+
+          public string GetVehicleLicensePlate()
+
+        public void PrintStatus()
+        {
+            string FixEnumName;
+            string strOut = "";
+            int numToPrint = 1;
+
+            foreach (string vType in Enum.GetNames(typeof(EVehicleStatus)))
+            {
+                FixEnumName = FixNameToPrint(vType);
+                strOut += string.Format("\n {0}. {1} ", numToPrint, FixEnumName);
+                numToPrint++;
+            }
+            Console.WriteLine(strOut);
+        }
+        public int  GetVehicleNewStatus()
+        {
+            string strNewStatus;
+
+            Console.WriteLine("Please Enter The New Vehcle Status: ");
+            PrintStatus();
+            strNewStatus = Console.ReadLine();
+            int numChoose = int.Parse(strNewStatus);
+            //if(valdin (asdasd)
+            {
+               // throw///
+            }
+            return numChoose;
+        }
+       public void AnnounceError(Exception ex)
         {
             return GetLettesAndDigitsString("Please Enter Your Vehicle License Plate:");
         }
@@ -293,8 +391,36 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("Please Enter The Vehicle Owner Phone: ");
             return GetOnlyDigitsString();
         }
+        public string FixNameToPrint(string i_Name)
+        { 
+           string fixStr = "";
+            int i = 0;
+            if (i_Name[1]=='_')
+            {
+                fixStr += i_Name[2];
+                i = 3;
+            }
+            else
+            {
+                fixStr += i_Name[0];
+                i = 1;
+            }
+            while (i< i_Name.Length)
+            {
+                if (Char.IsUpper(i_Name[i]))
+                {
+                    fixStr += " ";
+                }
+                fixStr += i_Name[i];
+                 i++;
+            }
+           
+            return fixStr;
+
+        }
 
     }
+
 }
 
 
