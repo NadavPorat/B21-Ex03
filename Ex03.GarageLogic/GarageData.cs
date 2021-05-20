@@ -32,13 +32,11 @@ namespace Ex03.GarageLogic
 
 
             if( m_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo))
->
             {
                 return VehicleInfo;
             }
             else
             {
-
                 throw new ArgumentException("Vehicle NOT Exist");
 
             }
