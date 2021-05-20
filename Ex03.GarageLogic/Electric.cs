@@ -3,7 +3,7 @@
 
 namespace Ex03.GarageLogic
 {
-    internal class Electric : Engine
+    public class Electric : Engine
     {
         private float m_LeftBatteryTime; //inHours
         private float m_MaxBatteryTime; //inHours
@@ -19,6 +19,11 @@ namespace Ex03.GarageLogic
             {
                 m_LeftBatteryTime = m_LeftBatteryTime + i_HoursToAdd;
             }
+        }
+
+        public override void SetCurrPower(float i_CurrPower)
+        {
+            m_LeftBatteryTime = i_CurrPower;
         }
 
     }

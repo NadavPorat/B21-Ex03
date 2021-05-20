@@ -3,7 +3,7 @@
 
 namespace Ex03.GarageLogic
 {
-    internal class Gasoline: Engine
+    public class Gasoline: Engine
     {
         private EGasType m_GasType;
         private float m_CurrGasAmount;
@@ -33,7 +33,12 @@ namespace Ex03.GarageLogic
             }
         }
 
-        internal enum EGasType
+        public override void SetCurrPower(float i_CurrPower)
+        {
+            m_CurrGasAmount = i_CurrPower;
+        }
+
+        public enum EGasType
         {
             Octan98,
             Octan96,

@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Reflection;
 
 
 namespace Ex03.GarageLogic
 {
     public class Truck : Vehicle
     {
-        private bool m_IsHazardousMaterial;
+        private bool m_IsCarryHazardMaterials;
         private float m_MaxCarryWeight;
 
         public Truck() : base(16, 26, new Gasoline(Gasoline.EGasType.Soler, 120))
@@ -20,7 +21,19 @@ namespace Ex03.GarageLogic
 
         public void SetIsHazardMaterial(bool i_IsHazardMaterial)
         {
-            m_IsHazardousMaterial = i_IsHazardMaterial;
+            m_IsCarryHazardMaterials = i_IsHazardMaterial;
+        }
+
+        public override void SetInfo(FieldInfo i_FieldInfo, Object i_ValueToPut)
+        {
+            if (i_FieldInfo.FieldType.GetTypeInfo() == m_IsCarryHazardMaterials.GetType())
+            {
+                m_IsCarryHazardMaterials = (int)i_ValueToPut == 1 ?  true : false;
+            }
+            else if (i_FieldInfo.FieldType.GetTypeInfo() == m_MaxCarryWeight.GetType())
+            {
+                m_MaxCarryWeight = (float)i_ValueToPut;
+            }
         }
     }
 }

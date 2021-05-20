@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Ex03.GarageLogic
 {
@@ -52,7 +53,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public string VehicleLicensePlate
+        public string LicensePlate
         {
             get
             {
@@ -63,23 +64,44 @@ namespace Ex03.GarageLogic
                 m_VehicleLicensePlate = value;
             }
         }
-
-        public void SetCurrWheelsAirPressure(float i_CurrAirPressure)
+        
+        public float CurrWheelsAirPressure
         {
-            foreach (Wheel wheel in m_WheelsList)
+            get
             {
-                wheel.AirPressure = i_CurrAirPressure;
+                return m_WheelsList[0].AirPressure;
+            }
+            set
+            {
+                foreach (Wheel wheel in m_WheelsList)
+                {
+                    wheel.AirPressure = value;
+                }
             }
         }
 
-        public void SetCurrEnergyAmount(float i_CurrEnragy)
+        public Engine Engine
         {
-            m_CurrEnergyPercentage = i_CurrEnragy;
+            get
+            {
+                return m_EngineType;
+            }
         }
+        
 
-        public void SetmVehicleLicensePlate(string i_LicensePlate)
+        public string WheelsManufacturer
         {
-            m_VehicleLicensePlate = i_LicensePlate;
+            get
+            {
+                return m_WheelsList[0].Manufaturer;
+            }
+            set
+            {
+                foreach (Wheel wheel in m_WheelsList)
+                {
+                    wheel.Manufaturer = value;
+                }
+            }
         }
 
         public void Refuel(float i_amountOfFuel)
@@ -94,5 +116,7 @@ namespace Ex03.GarageLogic
              // Fuel
             }
         }
+
+        public abstract void SetInfo(FieldInfo i_FieldInfo, Object i_ValueToPut);
     }
 }
