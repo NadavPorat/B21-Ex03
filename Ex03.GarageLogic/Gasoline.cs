@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.Reflection;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -21,6 +22,23 @@ namespace Ex03.GarageLogic
             m_CurrGasAmount = i_CurrGasAmount;
             m_MaxGasAmount = i_MaxGasAmount;
         }
+
+
+
+
+        public override StringBuilder GetDetails()
+        {
+            StringBuilder toDisplay = new StringBuilder();
+            Type vehicleType = GetType();
+
+            foreach (FieldInfo f in vehicleType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            {
+                    int idx = f.ToString().IndexOf("_");
+                    string memberName = f.ToString().Substring(idx + 1);
+                    toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
+            }
+
+            return toDisplay;
 
         public override void RefillEnergy(float i_ToAdd)
         {
@@ -52,6 +70,7 @@ namespace Ex03.GarageLogic
         public EGasType GetGasType()
         {
             return m_GasType;
+
         }
 
         public override void SetCurrPower(float i_CurrPower)

@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.Reflection;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -89,6 +90,30 @@ namespace Ex03.GarageLogic
             m_Vehicle.CurrWheelsAirPressure=i_CurrAirPressure;
         }
 
-        
+        internal StringBuilder GetCard()
+        {
+            StringBuilder toDisplay = new StringBuilder();
+            Type type = GetType();
+            toDisplay.Append(type.Name + " :\r\n\r\n");
+
+            foreach (FieldInfo f in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            {
+                if(f.FieldType == typeof(Vehicle))
+                {
+                    toDisplay.Append(m_Vehicle.GetDetails());
+                }
+                else
+                {
+                    int idx = f.ToString().IndexOf("_");
+                    string memberName = f.ToString().Substring(idx+1);
+                    toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
+                }
+            }
+
+           return toDisplay;
+        }
+
+
+
     }
 }

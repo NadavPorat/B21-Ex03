@@ -29,7 +29,6 @@ namespace Ex03.ConsoleUI
             {
                 try
                 {
-
                     switch (actionChoise)
                     {
                         case 1:
@@ -45,11 +44,12 @@ namespace Ex03.ConsoleUI
                             }
                         case 3:
                             {
-                                ChangeVehcleStatus();
+                                ChangeVehicleStatus();
                                 break;
                             }
                         case 4:
                             {
+                                InflateWheelsToMaximum();
                                 break;
                             }
                         case 5:
@@ -64,7 +64,9 @@ namespace Ex03.ConsoleUI
                             }
                         case 7:
                             {
-                         
+
+                                DisplayVehicleInfo();
+
                                 break;
                             }
                         case 8:
@@ -80,6 +82,7 @@ namespace Ex03.ConsoleUI
                     m_UI.AnnounceError(ex);
                     
                 }
+
                 m_UI.Menu();
                 actionChoise = m_UI.GetUserActionChoise();
             }
@@ -98,7 +101,6 @@ namespace Ex03.ConsoleUI
                 Vehicle v = Creator.Create(m_UI.GetVehicleType());
                 v.LicensePlate = licensePlate;
                 VehicleInfo vInfo = new VehicleInfo(v);
-                
                 InsertVehicleDetails(vInfo);
                 InsertSpecificTypeOfVehicleDetails(vInfo);
                 insertEngineDetails(vInfo);
@@ -152,7 +154,7 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public void ChangeVehcleStatus()
+        public void ChangeVehicleStatus()
         {
             string licensePlate = m_UI.GetVehicleLicensePlate();
 
@@ -225,7 +227,18 @@ namespace Ex03.ConsoleUI
                 }
             }
         }
-    
+
+        public void InflateWheelsToMaximum()
+        {
+            m_Data.InflateWheelsToMax(m_UI.GetVehicleLicensePlate());
+        }
+
+        public void DisplayVehicleInfo()
+        {
+            StringBuilder allVehiclesString = m_Data.GetVehicleInfoString(m_UI.GetVehicleLicensePlate());
+            Console.WriteLine(allVehiclesString);
+        }
+
          public enum EInfoType
         {
             ModelName,
