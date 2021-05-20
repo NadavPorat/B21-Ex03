@@ -42,6 +42,7 @@ namespace Ex03.ConsoleUI
                         }
                     case 3:
                         {
+                            ChangeVehcleStatus();
                             break;
                         }
                     case 4:
@@ -108,6 +109,22 @@ namespace Ex03.ConsoleUI
             foreach(EInfoType info in Enum.GetValues(typeof(EInfoType)))
             {
                 ValidationLoop(info , i_VehicleInfo);
+            }
+        }
+
+        public void ChangeVehcleStatus()
+        {
+            string licensePlate = m_UI.GetVehicleLicensePlate();
+         
+            if (m_Data.Contains(licensePlate))
+            {
+                int newStatus = m_UI.GetVehicleNewStatus();
+                EVehicleStatus vehicleNewStatus = (Ex03.GarageLogic.EVehicleStatus)(newStatus);
+                m_Data.FindVehicle(licensePlate).Status = vehicleNewStatus;                
+            }
+            else
+            {
+                throw (new ArgumentException("The Vehcle Not Exist"));
             }
         }
 
