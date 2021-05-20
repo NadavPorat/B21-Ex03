@@ -12,6 +12,7 @@ namespace Ex03.ConsoleUI
 
         public  void Menu()
         {
+           
             Console.WriteLine(
 @"Please Choose :
 1. Add a new vehicle
@@ -50,7 +51,7 @@ namespace Ex03.ConsoleUI
                 numToPrint++;
             }
             s += string.Format("\n {0}. {1} ", numToPrint, "Continue");
-
+            Console.WriteLine(s);
             choice = Console.ReadLine();
             choiseNum = int.Parse(choice);
 
@@ -95,11 +96,19 @@ namespace Ex03.ConsoleUI
             }
             foreach (VehicleInfo info in ListVehiclesBySatatus)
             {
-                fillterSatatusVehicles.AppendFormat("{0}. {1}.", numToPrint.ToString(), info.vehicle.LicensePlate);
+                fillterSatatusVehicles.AppendFormat("{0}. {1}", numToPrint.ToString(), info.vehicle.LicensePlate);
                 fillterSatatusVehicles.AppendLine();
                 numToPrint++;
             }
-            Console.WriteLine(fillterSatatusVehicles);
+            if (ListVehiclesBySatatus.Count == 0)
+            {
+                Console.WriteLine("No Vehcles In This Satatus");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine(fillterSatatusVehicles);
+            }
 
         }
 
