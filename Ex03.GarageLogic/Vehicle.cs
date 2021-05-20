@@ -67,10 +67,6 @@ namespace Ex03.GarageLogic
         
         public float CurrWheelsAirPressure
         {
-            get
-            {
-                return m_WheelsList[0].AirPressure;
-            }
             set
             {
                 foreach (Wheel wheel in m_WheelsList)

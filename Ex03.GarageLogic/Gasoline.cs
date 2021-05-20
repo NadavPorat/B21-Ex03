@@ -35,7 +35,14 @@ namespace Ex03.GarageLogic
 
         public override void SetCurrPower(float i_CurrPower)
         {
-            m_CurrGasAmount = i_CurrPower;
+            if (i_CurrPower <= m_MaxGasAmount)
+            {
+                m_CurrGasAmount = i_CurrPower;
+            }
+            else
+            {
+                throw new ValueOutOfRangeException("Value is Out Of Range", 0, m_MaxGasAmount);
+            }
         }
 
         public enum EGasType

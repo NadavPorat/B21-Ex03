@@ -8,10 +8,8 @@ using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
-
     public class UI
     {
-
         public  void Menu()
         {
             Console.WriteLine(
@@ -29,12 +27,23 @@ namespace Ex03.ConsoleUI
 
         public int GetUserActionChoise()
         {
+            bool goodInput = false;
             string choise = Console.ReadLine();
-            int userChoise;
+            int userChoise = 0;
 
-           while( !int.TryParse(choise,out userChoise) || userChoise<1 || userChoise>8 )
+            while (!goodInput)
             {
-                choise = Console.ReadLine();
+                try
+                {
+                    userChoise = int.Parse(choise);
+                    Validation.IsInRange(userChoise, 1, 8);
+                    goodInput = true;
+                }
+                catch(Exception ex)
+                {
+                    AnnounceError(ex);
+                    choise = Console.ReadLine();
+                }
             }
 
             return userChoise;
@@ -45,7 +54,7 @@ namespace Ex03.ConsoleUI
             string choice;
             string s = string.Format("{0}", "Please Choose a Vehicle Type: ");
             int numToPrint = 1;
-
+           
             foreach(string vType in Enum.GetNames(typeof(Creator.EVehicleType)))
             {
                 s += string.Format("\n {0}. {1} " , numToPrint, vType);
@@ -71,49 +80,59 @@ namespace Ex03.ConsoleUI
 
         public string GetModelName()
         {
-            string modelNmae;
-
-            Console.WriteLine("Plase Enter Modle Nmaee: ");
-            Console.WriteLine();
-            modelNmae = Console.ReadLine();
-
-            return modelNmae;
+            return GetLettesAndDigitsString("Please Enter Your Vehicle Model Name:");
         }
 
         public float GetAirPressure()
         {
-            string currAir;
-            
-            Console.WriteLine("Please Enter Current Air Pressure: ");
+            Console.WriteLine(@"Please Enter Your Wheels Current Air Pressure:
+");
+            return GetFloatNumber();
+        }
 
-            currAir = Console.ReadLine();
-            float FcurrAir=float.Parse(currAir);
+        private float GetFloatNumber()
+        {
+            float choise;
+            string userInput = Console.ReadLine();
 
-            return FcurrAir;
+            while (!float.TryParse(userInput,out choise))
+            {
+                    Console.WriteLine(@"Please Enter Again:
+");
+                  userInput = Console.ReadLine();
+ 
+            }
+
+            return choise;
+        }
+
+        private string GetOnlyDigitsString()
+        {
+            bool goodInput = false;
+            string userInput = Console.ReadLine();
+
+            while (!goodInput)
+            {
+                try
+                {
+                    Validation.IsOnlyDigits(userInput);
+                    goodInput = true;
+                }
+                catch (Exception ex)
+                {
+                    AnnounceError(ex);
+                    Console.WriteLine(@"Please Enter Again:
+");
+                    userInput = Console.ReadLine();
+                }
+            }
+
+            return userInput;
         }
 
         public string GetWheelsManufacturer()
         {
-            string manufacturer;
-
-            Console.WriteLine("Please Enter The Wheels Manufacturer Name: ");
-            manufacturer = Console.ReadLine();
-
-            return manufacturer;
-        }
-
-        public float GetLeftPowerAmount()
-        {
-
-            string LeftPowerAmount;
-
-            Console.WriteLine("Plase Enter Current Air Pressure: ");
-            Console.WriteLine();
-
-            LeftPowerAmount = Console.ReadLine();
-            float FLeftPower = float.Parse(LeftPowerAmount);
-
-            return FLeftPower;
+            return GetLettesAndDigitsString("Please Enter Your Vehicle Wheels Manufaturer:");
         }
 
         public void GetInfo(FieldInfo i_info, ref object io_ChoiseToReturn)
@@ -124,52 +143,61 @@ namespace Ex03.ConsoleUI
             {
                 io_ChoiseToReturn = GetEnumInfo(toAskUser, i_info);
             }
-            else if (i_info.FieldType.Equals(typeof(float))||i_info.FieldType.Equals(typeof(int)))
+            else if (i_info.FieldType == typeof(float?) || i_info.FieldType == typeof(int?))
             {
                 io_ChoiseToReturn = GetNumericInfo(toAskUser);
             }
-            else if (i_info.FieldType.Equals(typeof(System.Boolean)))
+            else if (i_info.FieldType== typeof(System.Boolean))
             {
                 io_ChoiseToReturn = GetBoolInfo(toAskUser);
+            }
+            else ////Gets Any Info From User-the object class wil handle validation. To support futer members typs.
+            {
+                io_ChoiseToReturn = Console.ReadLine();
             }
         }
 
         public object GetBoolInfo(string i_toAskUser)
         {
-            int choise;
+            bool goodInput = false;
+            int choise = 0;
+            string userChoise;
             i_toAskUser += String.Format("\n Choose :\n 1. YES \n 2. no");
-
             Console.WriteLine(i_toAskUser);
-            string userChoise = Console.ReadLine();
 
-            while (!int.TryParse(userChoise, out choise) || (choise!=1 && choise !=2))
-            {
-                Console.WriteLine("Error! Please Enter Again: ");
-                userChoise = Console.ReadLine();
+            while(!goodInput)
+            { 
+               userChoise = GetOnlyDigitsString();
+                choise= int.Parse(userChoise);
+
+                try
+                {
+                    Validation.IsInRange(choise, 1, 2);
+                    goodInput = true;
+                }
+                catch (Exception ex)
+                {
+                    AnnounceError(ex);
+                    Console.WriteLine(@"Please Enter Again:
+");
+                }
             }
 
             return choise;
         }
 
-        public object GetNumericInfo(string i_toAskUser)
+        public string GetNumericInfo(string i_toAskUser)
         {
             Console.WriteLine(i_toAskUser);
-
-            string userChoise = Console.ReadLine();
-            float choise;
-
-            while (!float.TryParse(userChoise, out choise))
-            {
-                Console.WriteLine("Error! Please Enter Again: ");
-                userChoise = Console.ReadLine();
-            }
-
-            return choise;
+            return GetOnlyDigitsString();
         }
 
         public object GetEnumInfo(string i_toAskUser, FieldInfo i_Info)
         {
-            int numOfOption = 1;
+            int numOfOption = 1, choise = 0;
+            bool goodInput = false;
+            string userChoise;
+
             i_toAskUser += string.Format("\n The Options Are: ");
 
             foreach (string Type in i_Info.FieldType.GetEnumNames())
@@ -178,16 +206,23 @@ namespace Ex03.ConsoleUI
                 numOfOption++;
             }
 
-
             Console.WriteLine(i_toAskUser);
 
-            string userChoise = Console.ReadLine();
-            int choise;
-
-            while (!int.TryParse(userChoise, out choise) || choise < 0 || choise > numOfOption - 1)
+            while (!goodInput)
             {
-                Console.WriteLine("Error! Please Enter Again: ");
-                userChoise = Console.ReadLine();
+                try
+                {
+                    userChoise = GetOnlyDigitsString();
+                    choise = int.Parse(userChoise);
+                    Validation.IsInRange(choise, 0, numOfOption - 1);
+                    goodInput = true;
+                }
+                catch (Exception ex)
+                {
+                    AnnounceError(ex);
+                    Console.WriteLine(@"Please Enter Again:
+");
+                }
             }
 
             return choise;
@@ -206,48 +241,57 @@ namespace Ex03.ConsoleUI
                 askUserStr += string.Format("Power Left Time: ");
             }
 
-            return (float)GetNumericInfo(askUserStr);
+            Console.WriteLine(askUserStr);
+            return GetFloatNumber();
+        }
+
+        private string GetLettesAndDigitsString(string i_MsgToUser)
+        {
+            Console.WriteLine(@"{0}
+", i_MsgToUser);
+
+            bool goodInput = false;
+            string userInput = Console.ReadLine();
+
+            while (!goodInput)
+            {
+                try
+                {
+                    Validation.IsOnlyDigitsAndLetters(userInput);
+                    goodInput = true;
+                }
+                catch (Exception ex)
+                {
+                    AnnounceError(ex);
+                    Console.WriteLine(@"Please Enter Again:
+");
+                    userInput = Console.ReadLine();
+                }
+
+            }
+
+            return userInput;
         }
 
         public string GetVehicleLicensePlate()
         {
-            string VehicleLicensePlate;
-
-            Console.WriteLine("Please Enter Vehicle License Plate: ");
-            Console.WriteLine();
-            VehicleLicensePlate = Console.ReadLine();
-
-            return VehicleLicensePlate;
+            return GetLettesAndDigitsString("Please Enter Your Vehicle License Plate:");
         }
 
        public void AnnounceError(Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine(@"Error: {0} .", ex.Message);
         }
-
-        ////////////////////////// Vehicle Info//////////////////////////////////////////
-
 
         public string GetVehicleOwnerName()
         {
-            string ownerName;
-
-            Console.WriteLine("Plase Enter Onwer Name: ");
-            Console.WriteLine();
-            ownerName = Console.ReadLine();
-
-            return ownerName;
+            return GetLettesAndDigitsString("Please Enter The Vehicle Owner Name: ");
         }
 
         public string GetVehicleOwnerPhone()
         {
-            string ownerPhone;
-
-            Console.WriteLine("Plase Enter Onwer Phone: ");
-            Console.WriteLine();
-            ownerPhone = Console.ReadLine();
-
-            return ownerPhone;
+            Console.WriteLine("Please Enter The Vehicle Owner Phone: ");
+            return GetOnlyDigitsString();
         }
 
     }

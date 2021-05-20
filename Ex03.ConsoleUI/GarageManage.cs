@@ -27,47 +27,56 @@ namespace Ex03.ConsoleUI
 
             while (garageOpen)
             {
-                switch (actionChoise)
+                try
                 {
-                    case 1:
-                        {
-                            InsertVehicle();
-                            break;
-                        }
-                    case 2:
-                        {
+                    switch (actionChoise)
+                    {
+                        case 1:
+                            {
+                                InsertVehicle();
+                                break;
+                            }
+                        case 2:
+                            {
 
-                            break;
-                        }
-                    case 3:
-                        {
-                            break;
-                        }
-                    case 4:
-                        {
-                            break;
-                        }
-                    case 5:
-                        {
-                            break;
-                        }
-                    case 6:
-                        {
-                            break;
-                        }
-                    case 7:
-                        {
-                            break;
-                        }
-                    case 8:
-                        {
-                            garageOpen = false;
-                            break;
-                        }
+                                break;
+                            }
+                        case 3:
+                            {
+
+                                break;
+                            }
+                        case 4:
+                            {
+                                break;
+                            }
+                        case 5:
+                            {
+                                break;
+                            }
+                        case 6:
+                            {
+                                break;
+                            }
+                        case 7:
+                            {
+                                break;
+                            }
+                        case 8:
+                            {
+                                garageOpen = false;
+                                break;
+                            }
+                    }
+
+                    m_UI.Menu();
+                    actionChoise = m_UI.GetUserActionChoise();
                 }
-
-                m_UI.Menu();
-                actionChoise = m_UI.GetUserActionChoise();
+                catch (Exception ex)
+                {
+                    m_UI.AnnounceError(ex);
+                    
+                }
             }
         }
 
@@ -99,7 +108,21 @@ namespace Ex03.ConsoleUI
 
         private void insertEngineDetails(VehicleInfo i_VehicleInfo)
         {
-            i_VehicleInfo.vehicle.Engine.SetCurrPower(m_UI.GetLeftPower(i_VehicleInfo.vehicle.Engine));
+            bool goodInput = false;
+
+            while (!goodInput)
+            {
+                try
+                {
+                    i_VehicleInfo.vehicle.Engine.SetCurrPower(m_UI.GetLeftPower(i_VehicleInfo.vehicle.Engine));
+                    goodInput = true;
+                }
+                catch (Exception ex)
+                {
+                    m_UI.AnnounceError(ex);
+                }
+            }
+
         }
 
         public void InsertVehicleDetails(VehicleInfo i_VehicleInfo)
@@ -116,7 +139,7 @@ namespace Ex03.ConsoleUI
 
             foreach(FieldInfo info in vType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
             {
-                object someInfo=null;
+                object someInfo = null;
                 m_UI.GetInfo(info, ref someInfo);
                 i_VehicleInfo.vehicle.SetInfo(info, someInfo);
             }
@@ -158,7 +181,7 @@ namespace Ex03.ConsoleUI
 
                         case EInfoType.OwnerPhone:
                             {
-                                i_VehicleInfo.VehicleOwnePhone = m_UI.GetVehicleOwnerPhone();
+                                i_VehicleInfo.VehicleOwnerPhone = m_UI.GetVehicleOwnerPhone();
                                 break;
                             }
                     }
