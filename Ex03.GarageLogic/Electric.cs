@@ -14,11 +14,18 @@ namespace Ex03.GarageLogic
             m_MaxBatteryTime = i_MaxBatteryTime;
         }
 
-        public override void RefillEnergy(float i_HoursToAdd) 
+
+        public override void RefillEnergy(float i_ToAdd) 
+
         {
-            if (m_MaxBatteryTime >= m_LeftBatteryTime + i_HoursToAdd)
+            if (m_MaxBatteryTime >= m_LeftBatteryTime + i_ToAdd)
             {
-                m_LeftBatteryTime = m_LeftBatteryTime + i_HoursToAdd;
+                m_LeftBatteryTime = m_LeftBatteryTime + i_ToAdd;
+            }
+            else
+            {
+                throw (new ValueOutOfRangeException("More Then Max Gas Amoubt", 0, m_MaxBatteryTime));
+
             }
         }
         public override StringBuilder GetDetails()
@@ -35,6 +42,7 @@ namespace Ex03.GarageLogic
 
             return toDisplay;
         }
+
 
         public override void SetCurrPower(float i_CurrPower)
         {

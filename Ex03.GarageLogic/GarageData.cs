@@ -25,19 +25,25 @@ namespace Ex03.GarageLogic
             return m_VehicleList.ContainsKey(i_LicenseNumber);
         }
 
+
         public VehicleInfo FindVehicle(string i_LicenseNumber)
         {
             VehicleInfo VehicleInfo = null;
 
-            if (m_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo))
+
+            if( m_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo))
+>
             {
                 return VehicleInfo;
             }
             else
             {
+
                 throw new ArgumentException("Vehicle NOT Exist");
+
             }
         }
+
 
         public void Insert(VehicleInfo i_VehicleInfo)
         {
@@ -84,6 +90,18 @@ namespace Ex03.GarageLogic
         {
             VehicleInfo v = FindVehicle(i_LicensePlate);
             v.vehicle.InflateWheels();
+        }
+
+        public void FulllGas(string i_VehicleLicensePlate, string i_GasType, float i_ToAdd)
+        {
+            VehicleInfo currVehicleInfo = FindVehicle(i_VehicleLicensePlate);
+            currVehicleInfo.vehicle.RefillGasVehicle(i_ToAdd, i_GasType);
+        }
+
+        public void FulllElectric(string i_VehicleLicensePlate, float i_ToAdd)
+        {
+            FindVehicle(i_VehicleLicensePlate).vehicle.RefillElctricVehicle(i_ToAdd);
+
         }
     }
 }

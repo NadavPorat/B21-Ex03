@@ -56,7 +56,6 @@ namespace Ex03.ConsoleUI
 
         public void PrintListVehcleByStatus(int i_ChoiseNum, GarageData i_Data)
         {
-            //VehicleInfo.EVehicleStatus eChoiseStatus = Enum.Parse(typeof(VehicleInfo.EVehicleStatus), i_ChoiseNum.ToString());
 
             VehicleInfo.EVehicleStatus eChoiseSatatus = (VehicleInfo.EVehicleStatus)i_ChoiseNum;
             string strOut = FixNameToPrint(eChoiseSatatus.ToString());
@@ -307,7 +306,38 @@ namespace Ex03.ConsoleUI
             return choise;
         }
 
-        public float GetLeftPower(Engine i_EngineType)
+
+        public string GetGasTypeToFill()
+        {
+            string FixEnumName;
+            string strOut = "";
+            int numToPrint = 1;
+
+            Console.WriteLine("Please Enter The Gasoline Type: ");
+            foreach (string vType in Enum.GetNames(typeof(Gasoline.EGasType)))
+            {
+                FixEnumName = FixNameToPrint(vType);
+                strOut += string.Format("\n {0}. {1} ", numToPrint, FixEnumName);
+                numToPrint++;
+            }
+   
+            Console.WriteLine(strOut);
+            string strGasType = Console.ReadLine();
+            int gasType = int.Parse(strGasType);
+            Gasoline.EGasType eGasType = (Gasoline.EGasType)gasType;
+            return eGasType.ToString();
+        }
+        public float GetEnragyAmountToAdd()
+        {
+          
+            Console.WriteLine("Please Enter The Enragy Amount To Add: ");
+            string strUser = Console.ReadLine();
+            bool b = float.TryParse(strUser,out float numToAdd);
+            return numToAdd;
+
+
+        }
+            public float GetLeftPower(Engine i_EngineType)
         {
             string askUserStr = string.Format("Please Enter The ");
 

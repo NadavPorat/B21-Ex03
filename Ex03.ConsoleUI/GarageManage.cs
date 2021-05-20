@@ -54,15 +54,19 @@ namespace Ex03.ConsoleUI
                             }
                         case 5:
                             {
+                                fullGasVehicle();
                                 break;
                             }
                         case 6:
                             {
+                                fullElectricVehicle();
                                 break;
                             }
                         case 7:
                             {
+
                                 DisplayVehicleInfo();
+
                                 break;
                             }
                         case 8:
@@ -71,6 +75,7 @@ namespace Ex03.ConsoleUI
                                 break;
                             }
                     }
+
                 }
                 catch (Exception ex)
                 {
@@ -107,6 +112,20 @@ namespace Ex03.ConsoleUI
         {
             m_Data.FindVehicle(i_LicensePlate).SetInProccesStatus();
         }
+        private void fullGasVehicle()
+        {
+            string VehicleLicensePlate = m_UI.GetVehicleLicensePlate();
+            string VehicleGasTypeToFill = m_UI.GetGasTypeToFill();
+            float amountToAdd = m_UI.GetEnragyAmountToAdd();
+            m_Data.FulllGas(VehicleLicensePlate, VehicleGasTypeToFill, amountToAdd);
+        }
+        private void fullElectricVehicle()
+        {
+            string VehicleLicensePlate = m_UI.GetVehicleLicensePlate();
+            float amountToAdd = m_UI.GetEnragyAmountToAdd();
+            m_Data.FulllElectric(VehicleLicensePlate, amountToAdd);
+        }
+
 
         private void insertEngineDetails(VehicleInfo i_VehicleInfo)
         {
@@ -138,17 +157,12 @@ namespace Ex03.ConsoleUI
         public void ChangeVehicleStatus()
         {
             string licensePlate = m_UI.GetVehicleLicensePlate();
-         
-            if (m_Data.Contains(licensePlate))
-            {
-                int newStatus = m_UI.GetVehicleNewStatus();
-                VehicleInfo.EVehicleStatus vehicleNewStatus = (Ex03.GarageLogic.VehicleInfo.EVehicleStatus)(newStatus);
-                m_Data.FindVehicle(licensePlate).Status = vehicleNewStatus;                
-            }
-            else
-            {
-                throw (new ArgumentException("The Vehcle Not Exist"));
-            }
+
+            VehicleInfo currVehicleInfo = m_Data.FindVehicle(licensePlate);
+            int newStatus = m_UI.GetVehicleNewStatus();
+            VehicleInfo.EVehicleStatus vehicleNewStatus = (Ex03.GarageLogic.VehicleInfo.EVehicleStatus)(newStatus);
+            currVehicleInfo.Status = vehicleNewStatus;
+
         }
 
         public void InsertSpecificTypeOfVehicleDetails(VehicleInfo i_VehicleInfo)

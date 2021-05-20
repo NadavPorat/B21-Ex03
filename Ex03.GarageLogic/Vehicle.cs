@@ -84,6 +84,34 @@ namespace Ex03.GarageLogic
             }
         }
 
+ 
+        public void RefillElctricVehicle(float i_ToAdd)
+        {
+            if (m_EngineType is Electric)
+            {
+                m_EngineType.RefillEnergy(i_ToAdd);
+            }
+            else
+            {
+                throw (new ArgumentException("Wrong Type Of Vehicle"));
+            }
+        }
+
+        public void RefillGasVehicle(float i_ToAdd,string i_GasType)
+        {
+            if (m_EngineType is Gasoline)
+            {
+                Gasoline gasolineEngine = m_EngineType as Gasoline;
+                gasolineEngine.RefillGas(i_ToAdd, i_GasType);
+            }
+            else
+            {
+                throw (new ArgumentException("Wrong Type Of Vehicle"));
+            }
+        }
+       
+
+
         public string WheelsManufacturer
         {
             set

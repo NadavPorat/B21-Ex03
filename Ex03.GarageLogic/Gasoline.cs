@@ -23,16 +23,8 @@ namespace Ex03.GarageLogic
             m_MaxGasAmount = i_MaxGasAmount;
         }
 
-        public override void RefillEnergy(float i_GassToAdd)
-        {
-            //if (m_GasType == i_GasType)
-            //{
-            //    if (m_MaxGasAmount >= m_CurrGasAmount + i_GassToAdd)
-            //    {
-            //        m_CurrGasAmount = m_CurrGasAmount + i_GassToAdd;
-            //    }
-            //}
-        }
+
+
 
         public override StringBuilder GetDetails()
         {
@@ -47,6 +39,38 @@ namespace Ex03.GarageLogic
             }
 
             return toDisplay;
+
+        public override void RefillEnergy(float i_ToAdd)
+        {
+
+                if (m_MaxGasAmount >= m_CurrGasAmount + i_ToAdd)
+                {
+                    m_CurrGasAmount = m_CurrGasAmount + i_ToAdd;
+                }
+            else
+            {
+                throw (new ValueOutOfRangeException("More Then Max Gas Amoubt", 0, m_MaxGasAmount));
+            }
+            
+        }
+        public void RefillGas(float i_ToAdd,string i_GasType)
+        {
+            Gasoline.EGasType gasType = (Gasoline.EGasType)Enum.Parse(typeof(Gasoline.EGasType), i_GasType);
+
+            if (gasType.Equals(gasType))
+            {
+                RefillEnergy(i_ToAdd);
+            }
+            else
+            {
+                throw (new ArgumentException("Wrong Gas Type"));
+            }
+        }
+
+        public EGasType GetGasType()
+        {
+            return m_GasType;
+
         }
 
         public override void SetCurrPower(float i_CurrPower)
@@ -63,7 +87,7 @@ namespace Ex03.GarageLogic
 
         public enum EGasType
         {
-            Octan98,
+            Octan98=1,
             Octan96,
             Octan95,
             Soler
