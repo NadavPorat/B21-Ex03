@@ -5,8 +5,8 @@ namespace Ex03.GarageLogic
 {
     public abstract class Car : Vehicle
     {
-        protected EColor m_CarColor;
-        protected EDoorsNum m_NumOfDoors;
+        protected eColor m_CarColor;
+        protected eDoorsNum m_NumOfDoors;
 
         public Car(Engine i_EngineType) : base(4, 32, i_EngineType)
         {
@@ -16,15 +16,15 @@ namespace Ex03.GarageLogic
         {
             if(i_FieldInfo.FieldType.GetTypeInfo()==m_CarColor.GetType())
             {
-                m_CarColor = (EColor)i_ValueToPut;
+                m_CarColor = (eColor)i_ValueToPut;
             }
             if(i_FieldInfo.FieldType.GetTypeInfo() == m_NumOfDoors.GetType())
             {
-                m_NumOfDoors = (EDoorsNum)i_ValueToPut;
+                m_NumOfDoors = (eDoorsNum)i_ValueToPut;
             }
         }
 
-        public enum EColor
+        public enum eColor
         {
             Red=1,
             Silver,
@@ -32,7 +32,7 @@ namespace Ex03.GarageLogic
             Black
         }
 
-        public enum EDoorsNum
+        public enum eDoorsNum
         {
             Two=1,
             Three,

@@ -9,7 +9,7 @@ namespace Ex03.ConsoleUI
 {
     public class Validation
     {
-        public static void IsOnlyDigitsAndLetters(string i_UserInput)
+        internal static void IsOnlyDigitsAndLetters(string i_UserInput)
         {
             if(!i_UserInput.All(char.IsLetterOrDigit))
             {
@@ -17,7 +17,7 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public static void IsOnlyDigits(string i_UserInput)
+        internal static void IsOnlyDigits(string i_UserInput)
         {
             if(!i_UserInput.All(char.IsDigit))
             {
@@ -25,7 +25,7 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public static void IsInRange(float i_UserInput, float i_From, float i_To)
+        internal static void IsInRange(float i_UserInput, float i_From, float i_To)
         {
             if(i_UserInput < i_From||i_UserInput> i_To)
             {

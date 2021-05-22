@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
 {
     public class Creator
     {
-        public enum EVehicleType
+        public enum eVehicleType
         {
             GasCar = 1,
             ElectricCar,
@@ -17,31 +17,30 @@ namespace Ex03.GarageLogic
             Truck
         }
 
-        public static Vehicle Create(EVehicleType i_VehicleType)
+        public static Vehicle Create(eVehicleType i_VehicleType)
         {
             Vehicle newVehicle = null;
 
             switch (i_VehicleType)
             {
-                case EVehicleType.GasCar:
+                case eVehicleType.GasCar:
                     newVehicle = new GasCar();
                     break;
-                case EVehicleType.ElectricCar:
+                case eVehicleType.ElectricCar:
                     newVehicle = new ElectricCar();
                     break;
-                case EVehicleType.GasMotor:
+                case eVehicleType.GasMotor:
                     newVehicle = new GasMotor();
                     break;
-                case EVehicleType.ElectricMotor:
+                case eVehicleType.ElectricMotor:
                     newVehicle = new ElectricMotor();
                     break;
-                case EVehicleType.Truck:
+                case eVehicleType.Truck:
                     newVehicle = new Truck();
                     break;
             }
 
             return newVehicle;
         }
-
     }
 }

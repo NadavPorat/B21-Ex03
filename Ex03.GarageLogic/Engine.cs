@@ -5,12 +5,12 @@ namespace Ex03.GarageLogic
 {
     public abstract class Engine
     {
-        public abstract float calcPowerPercentage();
+        internal abstract float CalcPowerPercentage();
 
-        public abstract void RefillEnergy(float i_ToAdd);
+        internal abstract void RefillEnergy(float i_ToAdd);
 
-        public abstract void SetCurrPower(float i_CurrPower);
+        internal abstract void SetCurrPower(float i_CurrPower);
 
-        public abstract StringBuilder GetDetails();
+        internal abstract StringBuilder GetDetails();
     }
 }

@@ -7,32 +7,33 @@ namespace Ex03.GarageLogic
     public class Electric : Engine
     {
         private float m_LeftBatteryTime; //inHours
-        private float m_MaxBatteryTime; //inHours
+        private readonly float r_MaxBatteryTime; //inHours
 
         public Electric(float i_MaxBatteryTime)
         {
-            m_MaxBatteryTime = i_MaxBatteryTime;
+            r_MaxBatteryTime = i_MaxBatteryTime;
         }
 
-        public override float calcPowerPercentage()
+        internal override float CalcPowerPercentage()
         {
-            return m_LeftBatteryTime / m_MaxBatteryTime;
+            return m_LeftBatteryTime / r_MaxBatteryTime;
         }
 
-        public override void RefillEnergy(float i_ToAdd) 
-
+        internal override void RefillEnergy(float i_MinutesToAdd) 
         {
-            if (m_MaxBatteryTime >= m_LeftBatteryTime + i_ToAdd)
+            float hoursToAdd = i_MinutesToAdd / 60f;
+
+            if (r_MaxBatteryTime >= m_LeftBatteryTime + hoursToAdd)
             {
-                m_LeftBatteryTime = m_LeftBatteryTime + i_ToAdd;
+                m_LeftBatteryTime = m_LeftBatteryTime + hoursToAdd;
             }
             else
             {
-                throw (new ValueOutOfRangeException("More Then Max Gas Amoubt", 0, m_MaxBatteryTime));
-
+                throw (new ValueOutOfRangeException("Value is Out Of Range", 0, r_MaxBatteryTime));
             }
         }
-        public override StringBuilder GetDetails()
+
+        internal override StringBuilder GetDetails()
         {
             StringBuilder toDisplay = new StringBuilder();
             Type vehicleType = GetType();
@@ -48,15 +49,15 @@ namespace Ex03.GarageLogic
         }
 
 
-        public override void SetCurrPower(float i_CurrPower)
+        internal override void SetCurrPower(float i_CurrPower)
         {
-            if (i_CurrPower <= m_MaxBatteryTime)
+            if (i_CurrPower>=0 && i_CurrPower<= r_MaxBatteryTime)
             {
                 m_LeftBatteryTime = i_CurrPower;
             }
             else
             {
-                throw new ValueOutOfRangeException("Value is Out Of Range", 0, m_MaxBatteryTime);
+                throw new ValueOutOfRangeException("Value is Out Of Range", 0, r_MaxBatteryTime);
             }
         }
 

@@ -10,10 +10,6 @@ namespace Ex03.GarageLogic
         private float m_MaxValue;
         private float m_MinValue;
 
-        public ValueOutOfRangeException(float i_MinValue, float i_MaxValue)
-        {
-        }
-
         public ValueOutOfRangeException(string i_Msg, float i_MinValue, float i_MaxValue) : base(string.Format("{0} . Minimum value: {1} Maximum value: {2}", i_Msg, i_MinValue, i_MaxValue))
         {
             m_MinValue = i_MinValue;
@@ -35,6 +31,5 @@ namespace Ex03.GarageLogic
                 return m_MinValue;
             }
         }
-
     }
 }

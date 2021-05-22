@@ -6,22 +6,22 @@ namespace Ex03.GarageLogic
 {
     public class Gasoline: Engine
     {
-        private EGasType m_GasType;
+        private readonly eGasType r_GasType;
         private float m_CurrGasAmount;
-        private float m_MaxGasAmount;
+        private readonly float r_MaxGasAmount;
 
-        public Gasoline(EGasType i_GasType, float i_MaxGasAmount)
+        public Gasoline(eGasType i_GasType, float i_MaxGasAmount)
         {
-            m_GasType = i_GasType;
-            m_MaxGasAmount = i_MaxGasAmount;
+            r_GasType = i_GasType;
+            r_MaxGasAmount = i_MaxGasAmount;
         }
 
-        public override float calcPowerPercentage()
+        internal override float CalcPowerPercentage()
         {
-            return m_CurrGasAmount / m_MaxGasAmount;
+            return m_CurrGasAmount / r_MaxGasAmount;
         }
 
-        public override StringBuilder GetDetails()
+        internal override StringBuilder GetDetails()
         {
             StringBuilder toDisplay = new StringBuilder();
             Type vehicleType = GetType();
@@ -36,23 +36,21 @@ namespace Ex03.GarageLogic
             return toDisplay;
         }
 
-        public override void RefillEnergy(float i_ToAdd)
+        internal override void RefillEnergy(float i_ToAdd)
         {
-                if (m_MaxGasAmount <= m_CurrGasAmount + i_ToAdd)
-                {
+            if (r_MaxGasAmount >= m_CurrGasAmount + i_ToAdd)
+            {
                     m_CurrGasAmount = m_CurrGasAmount + i_ToAdd;
-                }
+            }
             else
             {
-                throw (new ValueOutOfRangeException("More Than Max Gas Amount", 0, m_MaxGasAmount));
+                throw (new ValueOutOfRangeException("Value is Out Of Range", 0, r_MaxGasAmount));
             }
         }
 
-        public void RefillGas(float i_ToAdd,string i_GasType)
+        internal void RefillGas(float i_ToAdd, Gasoline.eGasType i_GasType)
         {
-            Gasoline.EGasType gasType = (Gasoline.EGasType)Enum.Parse(typeof(Gasoline.EGasType), i_GasType);
-
-            if (gasType.Equals(gasType))
+            if (i_GasType.Equals(r_GasType))
             {
                 RefillEnergy(i_ToAdd);
             }
@@ -62,24 +60,19 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public EGasType GetGasType()
+        internal override void SetCurrPower(float i_CurrPower)
         {
-            return m_GasType;
-        }
-
-        public override void SetCurrPower(float i_CurrPower)
-        {
-            if (i_CurrPower <= m_MaxGasAmount)
+            if (i_CurrPower>=0 && i_CurrPower <= r_MaxGasAmount)
             {
                 m_CurrGasAmount = i_CurrPower;
             }
             else
             {
-                throw new ValueOutOfRangeException("Value is Out Of Range", 0, m_MaxGasAmount);
+                throw new ValueOutOfRangeException("Value is Out Of Range", 0, r_MaxGasAmount);
             }
         }
 
-        public enum EGasType
+        public enum eGasType
         {
             Octan98=1,
             Octan96,
