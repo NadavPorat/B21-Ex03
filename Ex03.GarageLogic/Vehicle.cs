@@ -12,8 +12,8 @@ namespace Ex03.GarageLogic
         private string m_VehicleModel;
         private string m_VehicleLicensePlate;
         private float m_CurrEnergyPercentage;
+        private Engine m_Engine;
         private List<Wheel> m_WheelsList;
-        private Engine m_EngineType;
 
         public Vehicle()
         {
@@ -25,7 +25,7 @@ namespace Ex03.GarageLogic
             m_VehicleModel = i_VehicleModel;
             m_VehicleLicensePlate = i_VehicleLicensePlate;
             m_CurrEnergyPercentage = i_CurrEnergyPercentage;
-            m_EngineType = i_EngineType;
+            m_Engine = i_EngineType;
             m_WheelsList = new List<Wheel>();
         }
 
@@ -38,7 +38,12 @@ namespace Ex03.GarageLogic
                 m_WheelsList.Add(new Wheel(i_MaxWheelsPressure));
             }
 
-            m_EngineType = i_Engine;
+            m_Engine = i_Engine;
+        }
+
+        public Type GetEngineType()
+        {
+            return m_Engine.GetType();
         }
 
         public string VehicleModel 
@@ -80,16 +85,16 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return m_EngineType;
+                return m_Engine;
             }
         }
 
  
         public void RefillElctricVehicle(float i_ToAdd)
         {
-            if (m_EngineType is Electric)
+            if (m_Engine is Electric)
             {
-                m_EngineType.RefillEnergy(i_ToAdd);
+                m_Engine.RefillEnergy(i_ToAdd);
             }
             else
             {
@@ -99,9 +104,9 @@ namespace Ex03.GarageLogic
 
         public void RefillGasVehicle(float i_ToAdd,string i_GasType)
         {
-            if (m_EngineType is Gasoline)
+            if (m_Engine is Gasoline)
             {
-                Gasoline gasolineEngine = m_EngineType as Gasoline;
+                Gasoline gasolineEngine = m_Engine as Gasoline;
                 gasolineEngine.RefillGas(i_ToAdd, i_GasType);
             }
             else
@@ -109,8 +114,17 @@ namespace Ex03.GarageLogic
                 throw (new ArgumentException("Wrong Type Of Vehicle"));
             }
         }
-       
 
+        public void SetCurrPower(float i_PowerToAdd)
+        {
+            m_Engine.SetCurrPower(i_PowerToAdd);
+            updatePowerPercentage();
+        }
+
+        private void updatePowerPercentage()
+        {
+            m_CurrEnergyPercentage = m_Engine.calcPowerPercentage();
+        }
 
         public string WheelsManufacturer
         {
@@ -123,7 +137,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void InflateWheels()
+        public void InflateWheelsToMax()
         {
             foreach (Wheel wheel in m_WheelsList)
             {
@@ -136,11 +150,23 @@ namespace Ex03.GarageLogic
             StringBuilder toDisplay= new StringBuilder();
             Type vehicleType = GetType();
 
-            foreach (FieldInfo f in vehicleType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            foreach(FieldInfo f in typeof(Vehicle).GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
             {
                 if (f.FieldType == typeof(Engine))
                 {
-                    toDisplay.Append(m_EngineType.GetDetails());
+                    toDisplay.Append(m_Engine.GetDetails());
+                }
+                else if(f.FieldType==m_WheelsList.GetType())
+                {
+                    toDisplay.Append("\r\nWheels Information:");
+                    int wheelNum = 1;
+                    
+                    foreach(Wheel wheel in m_WheelsList)
+                    {
+                        toDisplay.Append("\r\nWheel "+ wheelNum+" :");
+                        toDisplay.Append(wheel.GetDetails());
+                        wheelNum++;
+                    }
                 }
                 else
                 {
@@ -150,19 +176,11 @@ namespace Ex03.GarageLogic
                 }
             }
 
-
-            foreach(FieldInfo f in typeof(Vehicle).GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            foreach (FieldInfo f in vehicleType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
             {
-                if (f.FieldType == typeof(Engine))
-                {
-                    toDisplay.Append(m_EngineType.GetDetails());
-                }
-                else
-                {
-                    int idx = f.ToString().IndexOf("_");
-                    string memberName = f.ToString().Substring(idx + 1);
-                    toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
-                }
+                int idx = f.ToString().IndexOf("_");
+                string memberName = f.ToString().Substring(idx + 1);
+                toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
             }
 
             return toDisplay;

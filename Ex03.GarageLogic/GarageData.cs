@@ -32,7 +32,6 @@ namespace Ex03.GarageLogic
 
 
             if( m_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo))
->
             {
                 return VehicleInfo;
             }
@@ -47,7 +46,7 @@ namespace Ex03.GarageLogic
 
         public void Insert(VehicleInfo i_VehicleInfo)
         {
-            m_VehicleList.Add(i_VehicleInfo.vehicle.LicensePlate, i_VehicleInfo);
+            m_VehicleList.Add(i_VehicleInfo.Vehicle.LicensePlate, i_VehicleInfo);
         }
 
         public StringBuilder GetVehicleInfoString(string i_LicensePlate)
@@ -77,7 +76,7 @@ namespace Ex03.GarageLogic
                 {
                     if (currVale.Status.Equals(i_EVehicleStatus))
                     {
-                        s += string.Format("{0}. {1}\n", countVehicle, currVale.vehicle.LicensePlate);
+                        s += string.Format("{0}. {1}\n", countVehicle, currVale.Vehicle.LicensePlate);
                         countVehicle++;
                     }
 
@@ -89,18 +88,18 @@ namespace Ex03.GarageLogic
         public void InflateWheelsToMax(string i_LicensePlate)
         {
             VehicleInfo v = FindVehicle(i_LicensePlate);
-            v.vehicle.InflateWheels();
+            v.Vehicle.InflateWheelsToMax();
         }
 
         public void FulllGas(string i_VehicleLicensePlate, string i_GasType, float i_ToAdd)
         {
             VehicleInfo currVehicleInfo = FindVehicle(i_VehicleLicensePlate);
-            currVehicleInfo.vehicle.RefillGasVehicle(i_ToAdd, i_GasType);
+            currVehicleInfo.Vehicle.RefillGasVehicle(i_ToAdd, i_GasType);
         }
 
         public void FulllElectric(string i_VehicleLicensePlate, float i_ToAdd)
         {
-            FindVehicle(i_VehicleLicensePlate).vehicle.RefillElctricVehicle(i_ToAdd);
+            FindVehicle(i_VehicleLicensePlate).Vehicle.RefillElctricVehicle(i_ToAdd);
 
         }
     }

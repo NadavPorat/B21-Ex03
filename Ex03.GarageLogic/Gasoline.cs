@@ -16,15 +16,10 @@ namespace Ex03.GarageLogic
             m_MaxGasAmount = i_MaxGasAmount;
         }
 
-        public Gasoline(EGasType i_GasType, float i_CurrGasAmount, float i_MaxGasAmount)
+        public override float calcPowerPercentage()
         {
-            m_GasType = i_GasType;
-            m_CurrGasAmount = i_CurrGasAmount;
-            m_MaxGasAmount = i_MaxGasAmount;
+            return m_CurrGasAmount / m_MaxGasAmount;
         }
-
-
-
 
         public override StringBuilder GetDetails()
         {
@@ -33,26 +28,26 @@ namespace Ex03.GarageLogic
 
             foreach (FieldInfo f in vehicleType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
             {
-                    int idx = f.ToString().IndexOf("_");
-                    string memberName = f.ToString().Substring(idx + 1);
-                    toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
+                int idx = f.ToString().IndexOf("_");
+                string memberName = f.ToString().Substring(idx + 1);
+                toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
             }
 
             return toDisplay;
+        }
 
         public override void RefillEnergy(float i_ToAdd)
         {
-
-                if (m_MaxGasAmount >= m_CurrGasAmount + i_ToAdd)
+                if (m_MaxGasAmount <= m_CurrGasAmount + i_ToAdd)
                 {
                     m_CurrGasAmount = m_CurrGasAmount + i_ToAdd;
                 }
             else
             {
-                throw (new ValueOutOfRangeException("More Then Max Gas Amoubt", 0, m_MaxGasAmount));
+                throw (new ValueOutOfRangeException("More Than Max Gas Amount", 0, m_MaxGasAmount));
             }
-            
         }
+
         public void RefillGas(float i_ToAdd,string i_GasType)
         {
             Gasoline.EGasType gasType = (Gasoline.EGasType)Enum.Parse(typeof(Gasoline.EGasType), i_GasType);
@@ -70,7 +65,6 @@ namespace Ex03.GarageLogic
         public EGasType GetGasType()
         {
             return m_GasType;
-
         }
 
         public override void SetCurrPower(float i_CurrPower)
@@ -92,7 +86,5 @@ namespace Ex03.GarageLogic
             Octan95,
             Soler
         }
-
-
     }
 }

@@ -12,13 +12,13 @@ namespace Ex03.ConsoleUI
         {
             Console.WriteLine(
 @"Please Choose :
-1. Add a new vehicle
+1. Add a new Vehicle
 2. Display license plates
-3. Change a vehicle's status
-4. Inflate a vehicle's tires to maximum
-5. Refuel a fuel-based vehicle
-6. Charge an electric-based vehicle
-7. Display vehicle information
+3. Change a Vehicle's status
+4. Inflate a Vehicle's tires to maximum
+5. Refuel a fuel-based Vehicle
+6. Charge an electric-based Vehicle
+7. Display Vehicle information
 8. Exit");
         }
 
@@ -337,15 +337,16 @@ namespace Ex03.ConsoleUI
 
 
         }
-            public float GetLeftPower(Engine i_EngineType)
+
+        public float GetLeftPower(Type i_EngineType)
         {
             string askUserStr = string.Format("Please Enter The ");
 
-            if(i_EngineType.GetType()== typeof(Gasoline))
+            if(i_EngineType== typeof(Gasoline))
             {
                 askUserStr+=string.Format("Curr Gasoline Amount: ");
             }
-            else if (i_EngineType.GetType()==typeof(Electric))
+            else if (i_EngineType==typeof(Electric))
             {
                 askUserStr += string.Format("Power Left Time: ");
             }

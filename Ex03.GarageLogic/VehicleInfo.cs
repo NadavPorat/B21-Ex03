@@ -51,7 +51,7 @@ namespace Ex03.GarageLogic
             m_VehicleStatus = EVehicleStatus.InProcces;
         }
 
-        public Vehicle vehicle
+        public Vehicle Vehicle
         {
             get
             {
@@ -94,7 +94,7 @@ namespace Ex03.GarageLogic
         {
             StringBuilder toDisplay = new StringBuilder();
             Type type = GetType();
-            toDisplay.Append(type.Name + " :\r\n\r\n");
+            toDisplay.Append(type.Name + " :\r\n");
 
             foreach (FieldInfo f in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
             {

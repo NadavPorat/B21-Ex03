@@ -3,19 +3,14 @@ using System.Reflection;
 
 namespace Ex03.GarageLogic
 {
-    public class Motorcycle : Vehicle
+    public abstract class Motorcycle : Vehicle
     {
         protected ELisenceType m_LicenseType;
         protected int? m_EngineCapacity;
 
-        //public Motorcycle(string i_LicenseType, int i_EngineCapacity, string i_VehicleModel, string i_LicensePlate, float i_CurrEnergyPer, Engine i_EngineType, ) : base(i_VehicleModel, i_LicensePlate, i_CurrEnergyPer, i_EngineType)
-        //{
-        //    m_LicenseType = i_LicenseType;
-        //    m_EngineCapacity = i_EngineCapacity;
-        //}
-
         public Motorcycle(Engine i_EngineType) : base(2, 30, i_EngineType)
         {
+            m_EngineCapacity = null;
         }
 
         public override void SetInfo(FieldInfo i_FieldInfo, Object i_ValueToPut)
