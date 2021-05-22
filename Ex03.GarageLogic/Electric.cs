@@ -14,6 +14,10 @@ namespace Ex03.GarageLogic
             m_MaxBatteryTime = i_MaxBatteryTime;
         }
 
+        public override float calcPowerPercentage()
+        {
+            return m_LeftBatteryTime / m_MaxBatteryTime;
+        }
 
         public override void RefillEnergy(float i_ToAdd) 
 

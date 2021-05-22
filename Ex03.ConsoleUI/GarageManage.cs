@@ -102,7 +102,7 @@ namespace Ex03.ConsoleUI
                 v.LicensePlate = licensePlate;
                 VehicleInfo vInfo = new VehicleInfo(v);
                 InsertVehicleDetails(vInfo);
-                InsertSpecificTypeOfVehicleDetails(vInfo);
+                InsertSpecificVehicleDetails(vInfo);
                 insertEngineDetails(vInfo);
                 m_Data.Insert(vInfo);
             }
@@ -119,13 +119,13 @@ namespace Ex03.ConsoleUI
             float amountToAdd = m_UI.GetEnragyAmountToAdd();
             m_Data.FulllGas(VehicleLicensePlate, VehicleGasTypeToFill, amountToAdd);
         }
+
         private void fullElectricVehicle()
         {
             string VehicleLicensePlate = m_UI.GetVehicleLicensePlate();
             float amountToAdd = m_UI.GetEnragyAmountToAdd();
             m_Data.FulllElectric(VehicleLicensePlate, amountToAdd);
         }
-
 
         private void insertEngineDetails(VehicleInfo i_VehicleInfo)
         {
@@ -135,7 +135,7 @@ namespace Ex03.ConsoleUI
             {
                 try
                 {
-                    i_VehicleInfo.vehicle.Engine.SetCurrPower(m_UI.GetLeftPower(i_VehicleInfo.vehicle.Engine));
+                    i_VehicleInfo.Vehicle.SetCurrPower(m_UI.GetLeftPower(i_VehicleInfo.Vehicle.GetEngineType()));
                     goodInput = true;
                 }
                 catch (Exception ex)
@@ -165,15 +165,15 @@ namespace Ex03.ConsoleUI
 
         }
 
-        public void InsertSpecificTypeOfVehicleDetails(VehicleInfo i_VehicleInfo)
+        public void InsertSpecificVehicleDetails(VehicleInfo i_VehicleInfo)
         {
-            Type vType = i_VehicleInfo.vehicle.GetType();
+            Type vType = i_VehicleInfo.Vehicle.GetType();
 
             foreach(FieldInfo info in vType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
             {
                 object someInfo = null;
                 m_UI.GetInfo(info, ref someInfo);
-                i_VehicleInfo.vehicle.SetInfo(info, someInfo);
+                i_VehicleInfo.Vehicle.SetInfo(info, someInfo);
             }
         }
 

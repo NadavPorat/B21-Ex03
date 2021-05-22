@@ -6,12 +6,13 @@ namespace Ex03.GarageLogic
 {
     public class Truck : Vehicle
     {
-        private bool m_IsCarryHazardMaterials;
+        private bool? m_IsCarryHazardMaterials;
         private float? m_MaxCarryWeight;
 
         public Truck() : base(16, 26, new Gasoline(Gasoline.EGasType.Soler, 120))
         {
-
+            m_MaxCarryWeight = null;
+            m_IsCarryHazardMaterials = null;
         }
 
         public void SetMaxCarryWeight(float i_MaxWeight)
