@@ -13,29 +13,15 @@ namespace Ex03.GarageLogic
         private string m_VehicleLicensePlate;
         private float m_CurrEnergyPercentage;
         private Engine m_Engine;
-        private List<Wheel> m_WheelsList;
-
-        public Vehicle()
-        {
-
-        }
-
-        public Vehicle(string i_VehicleModel, string i_VehicleLicensePlate, float i_CurrEnergyPercentage, Engine i_EngineType)
-        {
-            m_VehicleModel = i_VehicleModel;
-            m_VehicleLicensePlate = i_VehicleLicensePlate;
-            m_CurrEnergyPercentage = i_CurrEnergyPercentage;
-            m_Engine = i_EngineType;
-            m_WheelsList = new List<Wheel>();
-        }
+        private readonly List<Wheel> r_WheelsList;
 
         public Vehicle(int i_NumOfWheels, float i_MaxWheelsPressure, Engine i_Engine)
         {
-            m_WheelsList = new List<Wheel>();
+            r_WheelsList = new List<Wheel>();
 
             for (int i = 0; i < i_NumOfWheels; i++)
             {
-                m_WheelsList.Add(new Wheel(i_MaxWheelsPressure));
+                r_WheelsList.Add(new Wheel(i_MaxWheelsPressure));
             }
 
             m_Engine = i_Engine;
@@ -48,10 +34,6 @@ namespace Ex03.GarageLogic
 
         public string VehicleModel 
         {
-            get
-            {
-                return m_VehicleModel;
-            }
             set
             {
                 m_VehicleModel = value;
@@ -74,23 +56,14 @@ namespace Ex03.GarageLogic
         {
             set
             {
-                foreach (Wheel wheel in m_WheelsList)
+                foreach (Wheel wheel in r_WheelsList)
                 {
                     wheel.AirPressure = value;
                 }
             }
         }
 
-        public Engine Engine
-        {
-            get
-            {
-                return m_Engine;
-            }
-        }
-
- 
-        public void RefillElctricVehicle(float i_ToAdd)
+        internal void RefillElctricVehicle(float i_ToAdd)
         {
             if (m_Engine is Electric)
             {
@@ -102,7 +75,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void RefillGasVehicle(float i_ToAdd,string i_GasType)
+        internal void RefillGas(float i_ToAdd,Gasoline.eGasType i_GasType)
         {
             if (m_Engine is Gasoline)
             {
@@ -123,29 +96,29 @@ namespace Ex03.GarageLogic
 
         private void updatePowerPercentage()
         {
-            m_CurrEnergyPercentage = m_Engine.calcPowerPercentage();
+            m_CurrEnergyPercentage = m_Engine.CalcPowerPercentage();
         }
 
-        public string WheelsManufacturer
+        internal string WheelsManufacturer
         {
             set
             {
-                foreach (Wheel wheel in m_WheelsList)
+                foreach (Wheel wheel in r_WheelsList)
                 {
                     wheel.Manufaturer = value;
                 }
             }
         }
 
-        public void InflateWheelsToMax()
+        internal void InflateWheelsToMax()
         {
-            foreach (Wheel wheel in m_WheelsList)
+            foreach (Wheel wheel in r_WheelsList)
             {
                 wheel.AirPressure = wheel.MaxAirPressure;
             }
         }
 
-        public StringBuilder GetDetails()
+        internal StringBuilder GetDetails()
         {
             StringBuilder toDisplay= new StringBuilder();
             Type vehicleType = GetType();
@@ -156,12 +129,12 @@ namespace Ex03.GarageLogic
                 {
                     toDisplay.Append(m_Engine.GetDetails());
                 }
-                else if(f.FieldType==m_WheelsList.GetType())
+                else if(f.FieldType==r_WheelsList.GetType())
                 {
                     toDisplay.Append("\r\nWheels Information:");
                     int wheelNum = 1;
                     
-                    foreach(Wheel wheel in m_WheelsList)
+                    foreach(Wheel wheel in r_WheelsList)
                     {
                         toDisplay.Append("\r\nWheel "+ wheelNum+" :");
                         toDisplay.Append(wheel.GetDetails());
@@ -170,16 +143,14 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    int idx = f.ToString().IndexOf("_");
-                    string memberName = f.ToString().Substring(idx + 1);
+                    string memberName = GarageData.FixNameToPrint(f.ToString());
                     toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
                 }
             }
 
             foreach (FieldInfo f in vehicleType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
             {
-                int idx = f.ToString().IndexOf("_");
-                string memberName = f.ToString().Substring(idx + 1);
+                string memberName = GarageData.FixNameToPrint(f.ToString());
                 toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
             }
 

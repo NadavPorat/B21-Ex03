@@ -8,45 +8,35 @@ namespace Ex03.GarageLogic
 {
     public class GarageData
     {
-        private Dictionary<string, VehicleInfo> m_VehicleList;
+        private readonly Dictionary<string, VehicleInfo> r_VehicleList;
 
         public GarageData()
         {
-            m_VehicleList = new Dictionary<string, VehicleInfo>();
-        }
-
-        public Dictionary<string, VehicleInfo> GetListOfVeihcleInTheGarage()
-        {
-            return m_VehicleList;
+            r_VehicleList = new Dictionary<string, VehicleInfo>();
         }
 
         public bool Contains(string i_LicenseNumber)
         {
-            return m_VehicleList.ContainsKey(i_LicenseNumber);
+            return r_VehicleList.ContainsKey(i_LicenseNumber);
         }
-
 
         public VehicleInfo FindVehicle(string i_LicenseNumber)
         {
             VehicleInfo VehicleInfo = null;
 
-
-            if( m_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo))
+            if( r_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo))
             {
                 return VehicleInfo;
             }
             else
             {
-
                 throw new ArgumentException("Vehicle NOT Exist");
-
             }
         }
 
-
         public void Insert(VehicleInfo i_VehicleInfo)
         {
-            m_VehicleList.Add(i_VehicleInfo.Vehicle.LicensePlate, i_VehicleInfo);
+            r_VehicleList.Add(i_VehicleInfo.Vehicle.LicensePlate, i_VehicleInfo);
         }
 
         public StringBuilder GetVehicleInfoString(string i_LicensePlate)
@@ -54,35 +44,47 @@ namespace Ex03.GarageLogic
            return FindVehicle(i_LicensePlate).GetCard();
         }
 
-        //internal List<VehicleInfo> GetListVehiclesByStatus(EVehicleStatus i_EVehicleStatus)
-        //{
-        //    List<VehicleInfo> listOfVehicles = new List<VehicleInfo>();
-
-        //    foreach (VehicleInfo currVale in m_VehicleList.Values)
-        //    {
-        //        if (currVale.Status.Equals( i_EVehicleStatus))
-        //        {
-        //            listOfVehicles.Add(currVale);
-        //        }
-
-        //    }
-        //    return listOfVehicles;
-        //}
-        public string GetListLicensePlateVehiclesByStatus(VehicleInfo.EVehicleStatus i_EVehicleStatus)
+        public string GetListLicensePlate()
         {
-            string s = "";
-            int countVehicle = 1;
-                foreach (VehicleInfo currVale in m_VehicleList.Values)
+            string listVehicles = null;
+            int countVehicle = 0;
+
+            foreach (VehicleInfo currVale in r_VehicleList.Values)
+            {
+                if(countVehicle==0)
+                {
+                    listVehicles += ("All Vehicles List: \n");
+                }
+                countVehicle++;
+                listVehicles += string.Format("{0}. {1}\n", countVehicle, currVale.Vehicle.LicensePlate);
+            }
+
+            return listVehicles;
+        }
+
+        public string GetListLicensePlateByStatus(VehicleInfo.eVehicleStatus i_EVehicleStatus)
+        {
+            string listByStatus= null;
+            int countVehicle = 0;
+
+                foreach (VehicleInfo currVale in r_VehicleList.Values)
                 {
                     if (currVale.Status.Equals(i_EVehicleStatus))
                     {
-                        s += string.Format("{0}. {1}\n", countVehicle, currVale.Vehicle.LicensePlate);
-                        countVehicle++;
-                    }
+                      if(countVehicle==0)
+                      {
+                        string fixName = GarageData.FixNameToPrint(i_EVehicleStatus.ToString());
+                        listByStatus += string.Format("{0} Vehicles List: \n", fixName);
 
+                    }
+                    countVehicle++;
+                    listByStatus += string.Format("{0}. {1}\n", countVehicle, currVale.Vehicle.LicensePlate);
+           
+                    }
                 }
-            
-            return s;
+
+
+            return listByStatus;
         }
 
         public void InflateWheelsToMax(string i_LicensePlate)
@@ -91,16 +93,38 @@ namespace Ex03.GarageLogic
             v.Vehicle.InflateWheelsToMax();
         }
 
-        public void FulllGas(string i_VehicleLicensePlate, string i_GasType, float i_ToAdd)
+        public void FillGas(string i_VehicleLicensePlate, Gasoline.eGasType i_GasType, float i_ToAdd)
         {
             VehicleInfo currVehicleInfo = FindVehicle(i_VehicleLicensePlate);
-            currVehicleInfo.Vehicle.RefillGasVehicle(i_ToAdd, i_GasType);
+            currVehicleInfo.Vehicle.RefillGas(i_ToAdd, i_GasType);
         }
 
-        public void FulllElectric(string i_VehicleLicensePlate, float i_ToAdd)
+        public void FillElectric(string i_VehicleLicensePlate, float i_ToAdd)
         {
             FindVehicle(i_VehicleLicensePlate).Vehicle.RefillElctricVehicle(i_ToAdd);
+        }
 
+        public static string FixNameToPrint(string i_Name)
+        {
+            string fixStr = "";
+            int i = 1;
+
+            int idx = i_Name.ToString().IndexOf("_");
+            i_Name = i_Name.ToString().Substring(idx + 1);
+            fixStr += i_Name[0];
+
+            while (i < i_Name.Length)
+            {
+                if (Char.IsUpper(i_Name[i]))
+                {
+                    fixStr += " ";
+                }
+
+                fixStr += i_Name[i];
+                i++;
+            }
+
+            return fixStr;
         }
     }
 }

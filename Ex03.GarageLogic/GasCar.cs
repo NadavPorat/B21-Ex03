@@ -8,9 +8,8 @@ namespace Ex03.GarageLogic
 {
     public class GasCar: Car
     {
-        public GasCar(): base(new Gasoline(Gasoline.EGasType.Octan95,45))
+        public GasCar(): base(new Gasoline(Gasoline.eGasType.Octan95,45))
         {
-
         }
     }
 }

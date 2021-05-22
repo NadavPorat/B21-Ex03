@@ -8,8 +8,10 @@ namespace Ex03.ConsoleUI
 {
     public class UI
     {
-        public void Menu()
+        internal void Menu()
         {
+            Console.Clear();
+
             Console.WriteLine(
 @"Please Choose :
 1. Add a new Vehicle
@@ -20,61 +22,43 @@ namespace Ex03.ConsoleUI
 6. Charge an electric-based Vehicle
 7. Display Vehicle information
 8. Exit");
+
         }
 
-        public void DisplayLicensePlates(GarageData i_Data)
+        internal void PrintMsg(string i_ToPrint)
         {
-            string choice;
-            string strOut = "";
-            int choiseNum = 0;
-
-
-            Console.WriteLine("Hi! Choose Which Vehicle You Want To See: ");
-            Console.Write("\n 0. List Of All Vehcles");
-            PrintStatus();
-            Console.WriteLine(strOut);
-            choice = Console.ReadLine();
-            choiseNum = int.Parse(choice);
-
-            if (choiseNum == 0)
-            {
-
-                int numToPrint = 1;
-                foreach (string key in i_Data.GetListOfVeihcleInTheGarage().Keys)
-                {
-                    strOut += string.Format("\n {0}. {1} ", numToPrint, key);
-                    numToPrint++;
-                }
-                Console.WriteLine(strOut);
-            }
-            else
-            {
-                PrintListVehcleByStatus(choiseNum, i_Data);
-            }
-
+            Console.WriteLine(i_ToPrint);
         }
 
-        public void PrintListVehcleByStatus(int i_ChoiseNum, GarageData i_Data)
+        internal bool AskUserFilterChoise()
         {
+            bool isWithFilter = false;
+            string strOut = "Do You Want A List Of Vehicles By Specific Status ?";
 
-            VehicleInfo.EVehicleStatus eChoiseSatatus = (VehicleInfo.EVehicleStatus)i_ChoiseNum;
-            string strOut = FixNameToPrint(eChoiseSatatus.ToString());
-            strOut += " Vehicles: ";
+            object choise = getBoolInfo(strOut);
 
-            string listVehcle = i_Data.GetListLicensePlateVehiclesByStatus(eChoiseSatatus);
-
-            if (listVehcle.Length == 0)
+            if((int)choise == 1)
             {
-                Console.WriteLine("No Vehcles In This Status\n");
+                isWithFilter = true;
             }
-            else
-            {
-                Console.WriteLine(strOut);
-                Console.WriteLine(listVehcle);
-            }
+
+            return isWithFilter;
         }
 
-        public int GetUserActionChoise()
+        internal VehicleInfo.eVehicleStatus GetStatus()
+        {
+           string strOut = "Which Vehicles You Want To See: ";
+
+           return (VehicleInfo.eVehicleStatus)getEnumInfo(strOut, Enum.GetNames(typeof(VehicleInfo.eVehicleStatus)));
+        }
+
+        internal void AskUserPressSomethingToCont()
+        {
+            Console.WriteLine("Please Enter Any Key To Continue...");
+            Console.ReadLine();
+        }
+
+        internal int GetUserActionChoise()
         {
             bool goodInput = false;
             string choise = Console.ReadLine();
@@ -95,53 +79,28 @@ namespace Ex03.ConsoleUI
                 }
             }
 
+            Console.Clear();
             return userChoise;
         }
 
-        public Creator.EVehicleType GetVehicleType()
+        internal Creator.eVehicleType GetVehicleType()
         {
-            string choice;
-            string s = string.Format("{0}", "Please Choose a Vehicle Type: ");
-            int numToPrint = 1;
-
-            foreach (string vType in Enum.GetNames(typeof(Creator.EVehicleType)))
-            {
-                string fixName;
-                fixName = FixNameToPrint(vType);
-                s += string.Format("\n {0}. {1} ", numToPrint, fixName);
-                numToPrint++;
-            }
-
-            Console.WriteLine(s);
-
-            choice = Console.ReadLine();
-            int choiseNum = int.Parse(choice);
-
-            while (!Enum.IsDefined(typeof(Creator.EVehicleType), choiseNum))
-            {
-                Console.WriteLine("Error,Please Enter Again: ");
-                choice = Console.ReadLine();
-                choiseNum = int.Parse(choice);
-            }
-
-            object carType = Enum.Parse(typeof(Creator.EVehicleType), choice);
-
-            return (Creator.EVehicleType)carType;
+            return (Creator.eVehicleType)getEnumInfo("Please Choose a Vehicle Type ", Enum.GetNames(typeof(Creator.eVehicleType)));
         }
 
-        public string GetModelName()
+        internal string GetModelName()
         {
-            return GetLettesAndDigitsString("Please Enter Your Vehicle Model Name:");
+            return getLettesAndDigitsString("Please Enter Your Vehicle Model Name:");
         }
 
-        public float GetAirPressure()
+        internal float GetAirPressure()
         {
             Console.WriteLine(@"Please Enter Your Wheels Current Air Pressure:
 ");
-            return GetFloatNumber();
+            return getFloatNumber();
         }
 
-        private float GetFloatNumber()
+        private float getFloatNumber()
         {
             float choise;
             string userInput = Console.ReadLine();
@@ -151,13 +110,12 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine(@"Please Enter Again:
 ");
                 userInput = Console.ReadLine();
-
             }
 
             return choise;
         }
 
-        private string GetOnlyDigitsString()
+        private string getOnlyDigitsString()
         {
             bool goodInput = false;
             string userInput = Console.ReadLine();
@@ -176,58 +134,34 @@ namespace Ex03.ConsoleUI
 ");
                     userInput = Console.ReadLine();
                 }
-
             }
 
             return userInput;
         }
 
-        public float GetLeftPowerAmount()
+        internal string GetWheelsManufacturer()
         {
-            bool goodInput = false;
-            string userInput = Console.ReadLine();
-
-            while (!goodInput)
-            {
-                try
-                {
-                    Validation.IsOnlyDigits(userInput);
-                    goodInput = true;
-                }
-                catch (Exception ex)
-                {
-                    AnnounceError(ex);
-                    Console.WriteLine(@"Please Enter Again:
-");
-                    userInput = Console.ReadLine();
-                }
-            }
-
-            return float.Parse(userInput);
+            return getLettesAndDigitsString("Please Enter Your Vehicle Wheels Manufaturer:");
         }
 
-        public string GetWheelsManufacturer()
-        {
-            return GetLettesAndDigitsString("Please Enter Your Vehicle Wheels Manufaturer:");
-        }
-
-        public void GetInfo(FieldInfo i_info, ref object io_ChoiseToReturn)
+        internal void GetInfo(FieldInfo i_Info, ref object io_ChoiseToReturn)
         {
             string fixName;
-            fixName=FixNameToPrint(i_info.Name);
+            fixName= GarageData.FixNameToPrint(i_Info.Name);
+
             string toAskUser = string.Format(@"Please Enter {0} :", fixName);
 
-            if (i_info.FieldType.IsEnum)
+            if (i_Info.FieldType.IsEnum)
             {
-                io_ChoiseToReturn = GetEnumInfo(toAskUser, i_info);
+                io_ChoiseToReturn = getEnumInfo(toAskUser, i_Info.FieldType.GetEnumNames());
             }
-            else if (i_info.FieldType == typeof(float?) || i_info.FieldType == typeof(int?))
+            else if (i_Info.FieldType == typeof(float?) || i_Info.FieldType == typeof(int?))
             {
-                io_ChoiseToReturn = GetNumericInfo(toAskUser);
+                io_ChoiseToReturn = getNumericInfo(toAskUser);
             }
-            else if (i_info.FieldType== typeof(System.Boolean))
+            else if (i_Info.FieldType== typeof(bool?))
             {
-                io_ChoiseToReturn = GetBoolInfo(toAskUser);
+                io_ChoiseToReturn = getBoolInfo(toAskUser);
             }
             else ////Gets Any Info From User-the object class wil handle validation. To support futer members typs.
             {
@@ -235,17 +169,17 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public object GetBoolInfo(string i_toAskUser)
+        private object getBoolInfo(string i_toAskUser)
         {
             bool goodInput = false;
             int choise = 0;
             string userChoise;
-            i_toAskUser += String.Format("\n Choose :\n 1. YES \n 2. no");
+            i_toAskUser += String.Format("\n Choose :\n 1. YES \n 2. No");
             Console.WriteLine(i_toAskUser);
 
             while(!goodInput)
             { 
-               userChoise = GetOnlyDigitsString();
+               userChoise = getOnlyDigitsString();
                 choise= int.Parse(userChoise);
 
                 try
@@ -264,13 +198,13 @@ namespace Ex03.ConsoleUI
             return choise;
         }
 
-        public string GetNumericInfo(string i_toAskUser)
+        private float getNumericInfo(string i_toAskUser)
         {
             Console.WriteLine(i_toAskUser);
-            return GetOnlyDigitsString();
+            return getFloatNumber();
         }
 
-        public object GetEnumInfo(string i_toAskUser, FieldInfo i_Info)
+        private object getEnumInfo(string i_toAskUser, string[] i_EnumString)
         {
             int numOfOption = 1, choise = 0;
             bool goodInput = false;
@@ -278,9 +212,10 @@ namespace Ex03.ConsoleUI
 
             i_toAskUser += string.Format("\n The Options Are: ");
 
-            foreach (string Type in i_Info.FieldType.GetEnumNames())
+            foreach (string enumName in i_EnumString)
             {
-                i_toAskUser += string.Format("\n {0}. {1} ", numOfOption, Type);
+               string fixedName = GarageData.FixNameToPrint(enumName);
+                i_toAskUser += string.Format("\n {0}. {1} ", numOfOption, fixedName);
                 numOfOption++;
             }
 
@@ -290,7 +225,7 @@ namespace Ex03.ConsoleUI
             {
                 try
                 {
-                    userChoise = GetOnlyDigitsString();
+                    userChoise = getOnlyDigitsString();
                     choise = int.Parse(userChoise);
                     Validation.IsInRange(choise, 0, numOfOption - 1);
                     goodInput = true;
@@ -306,39 +241,25 @@ namespace Ex03.ConsoleUI
             return choise;
         }
 
+        internal Gasoline.eGasType GetGasTypeToFill()
+        { 
+            object gasType = getEnumInfo("Please Enter The Gasoline Type: ", Enum.GetNames(typeof(Gasoline.eGasType)));
+            return (Gasoline.eGasType)Enum.Parse(typeof(Gasoline.eGasType), gasType.ToString());
+        }
 
-        public string GetGasTypeToFill()
+        internal float GetEnergyAmountToAdd()
         {
-            string FixEnumName;
-            string strOut = "";
-            int numToPrint = 1;
-
-            Console.WriteLine("Please Enter The Gasoline Type: ");
-            foreach (string vType in Enum.GetNames(typeof(Gasoline.EGasType)))
+            Console.WriteLine("Please Enter The Energy Amount To Add: ");
+            float powerToAdd = getFloatNumber();
+            if(powerToAdd<0)
             {
-                FixEnumName = FixNameToPrint(vType);
-                strOut += string.Format("\n {0}. {1} ", numToPrint, FixEnumName);
-                numToPrint++;
+                throw new ArgumentException("Amount To Add Must Be Positive");
             }
-   
-            Console.WriteLine(strOut);
-            string strGasType = Console.ReadLine();
-            int gasType = int.Parse(strGasType);
-            Gasoline.EGasType eGasType = (Gasoline.EGasType)gasType;
-            return eGasType.ToString();
-        }
-        public float GetEnragyAmountToAdd()
-        {
-          
-            Console.WriteLine("Please Enter The Enragy Amount To Add: ");
-            string strUser = Console.ReadLine();
-            bool b = float.TryParse(strUser,out float numToAdd);
-            return numToAdd;
 
-
+            return powerToAdd;
         }
 
-        public float GetLeftPower(Type i_EngineType)
+        internal float GetLeftPower(Type i_EngineType)
         {
             string askUserStr = string.Format("Please Enter The ");
 
@@ -352,10 +273,10 @@ namespace Ex03.ConsoleUI
             }
 
             Console.WriteLine(askUserStr);
-            return GetFloatNumber();
+            return getFloatNumber();
         }
 
-        private string GetLettesAndDigitsString(string i_MsgToUser)
+        private string getLettesAndDigitsString(string i_MsgToUser)
         {
             Console.WriteLine(@"{0}
 ", i_MsgToUser);
@@ -377,94 +298,38 @@ namespace Ex03.ConsoleUI
 ");
                     userInput = Console.ReadLine();
                 }
-
             }
 
             return userInput;
         }
 
-
-          
-
-        public void PrintStatus()
-        {
-            string FixEnumName;
-            string strOut = "";
-            int numToPrint = 1;
-
-            foreach (string vType in Enum.GetNames(typeof(VehicleInfo.EVehicleStatus)))
-            {
-                FixEnumName = FixNameToPrint(vType);
-                strOut += string.Format("\n {0}. {1} ", numToPrint, FixEnumName);
-                numToPrint++;
-            }
-            Console.WriteLine(strOut);
-        }
-        public int  GetVehicleNewStatus()
-        {
-            string strNewStatus;
-
-            Console.WriteLine("Please Enter The New Vehcle Status: ");
-            PrintStatus();
-            strNewStatus = Console.ReadLine();
-            int numChoose = int.Parse(strNewStatus);
-            //if(valdin (asdasd)
-            {
-               // throw///
-            }
-            return numChoose;
+        internal VehicleInfo.eVehicleStatus GetVehicleNewStatus()
+        { 
+            object newStatus = getEnumInfo("Please Enter The New Status :", Enum.GetNames(typeof(VehicleInfo.eVehicleStatus)));
+            return (VehicleInfo.eVehicleStatus)Enum.Parse(typeof(VehicleInfo.eVehicleStatus), newStatus.ToString());
         }
 
-        public string GetVehicleLicensePlate()
+        internal string GetVehicleLicensePlate()
         {
-            return GetLettesAndDigitsString("Please Enter Your Vehicle License Plate:");
+            return getLettesAndDigitsString("Please Enter Your Vehicle License Plate:");
         }
 
-       public void AnnounceError(Exception ex)
+        internal void AnnounceError(Exception ex)
         {
-            Console.WriteLine(@"Error: {0} .", ex.Message);
+            Console.WriteLine(@"Error: {0}.", ex.Message);
         }
 
-        public string GetVehicleOwnerName()
+        internal string GetVehicleOwnerName()
         {
-            return GetLettesAndDigitsString("Please Enter The Vehicle Owner Name: ");
+            return getLettesAndDigitsString("Please Enter The Vehicle Owner Name: ");
         }
 
-        public string GetVehicleOwnerPhone()
+        internal string GetVehicleOwnerPhone()
         {
             Console.WriteLine("Please Enter The Vehicle Owner Phone: ");
-            return GetOnlyDigitsString();
+            return getOnlyDigitsString();
         }
-        public string FixNameToPrint(string i_Name)
-        { 
-           string fixStr = "";
-            int i = 0;
-            if (i_Name[1]=='_')
-            {
-                fixStr += i_Name[2];
-                i = 3;
-            }
-            else
-            {
-                fixStr += i_Name[0];
-                i = 1;
-            }
-            while (i< i_Name.Length)
-            {
-                if (Char.IsUpper(i_Name[i]))
-                {
-                    fixStr += " ";
-                }
-                fixStr += i_Name[i];
-                 i++;
-            }
-           
-            return fixStr;
-
-        }
-
     }
-
 }
 
 

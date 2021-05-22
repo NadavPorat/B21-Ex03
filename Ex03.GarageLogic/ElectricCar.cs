@@ -10,7 +10,6 @@ namespace Ex03.GarageLogic
     {
         public ElectricCar(): base(new Electric(3.2f))
         {
-
         }
     }
 }

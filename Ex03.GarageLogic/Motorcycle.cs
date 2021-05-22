@@ -5,7 +5,7 @@ namespace Ex03.GarageLogic
 {
     public abstract class Motorcycle : Vehicle
     {
-        protected ELisenceType m_LicenseType;
+        protected eLisenceType m_LicenseType;
         protected int? m_EngineCapacity;
 
         public Motorcycle(Engine i_EngineType) : base(2, 30, i_EngineType)
@@ -17,15 +17,15 @@ namespace Ex03.GarageLogic
         {
             if (i_FieldInfo.FieldType == m_LicenseType.GetType())
             {
-                m_LicenseType = (ELisenceType)i_ValueToPut;
+                m_LicenseType = (eLisenceType)i_ValueToPut;
             }
             else if (i_FieldInfo.FieldType == typeof(int?))
             {
-                m_EngineCapacity = int.Parse((string)i_ValueToPut) as int?;
+                m_EngineCapacity = (int)(i_ValueToPut as float?);
             }
         }
 
-        public enum ELisenceType
+        public enum eLisenceType
         {
             BB=1,
             AA,

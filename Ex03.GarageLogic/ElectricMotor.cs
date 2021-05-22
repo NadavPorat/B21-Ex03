@@ -7,7 +7,6 @@ namespace Ex03.GarageLogic
     {
         public ElectricMotor() : base(new Electric(1.8f))
         {
-
         }
     }
 }
