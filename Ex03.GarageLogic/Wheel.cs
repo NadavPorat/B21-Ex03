@@ -6,9 +6,9 @@ namespace Ex03.GarageLogic
 {
     public class Wheel
     {
+        protected readonly float r_MaxAirPressure;
         protected string m_ManufacturerName;
         protected float? m_CurrAirPressure;
-        protected readonly float r_MaxAirPressure;
 
         public Wheel(float i_MaxAirPressure)
         {
@@ -22,13 +22,13 @@ namespace Ex03.GarageLogic
             get { return m_CurrAirPressure; }
             set 
             {
-                if (value>=0 && value <= r_MaxAirPressure)
+                if (value >= 0 && value <= r_MaxAirPressure)
                 {
                     m_CurrAirPressure = value;
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException("Value is Out Of Range", 0, r_MaxAirPressure);
+                    throw new ValueOutOfRangeException("Value is Out Of Range.", 0, r_MaxAirPressure);
                 }
             }
         }
@@ -47,6 +47,7 @@ namespace Ex03.GarageLogic
             {
                 return m_ManufacturerName;
             }
+
             set
             {
                 m_ManufacturerName = value;
@@ -60,8 +61,8 @@ namespace Ex03.GarageLogic
             foreach(FieldInfo field in GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
             {
                 string memberName = field.Name;
-               memberName = GarageData.FixNameToPrint(memberName.ToString());
-                toDisplay.Append("\r\n " + memberName + " = " + field.GetValue(this));
+               memberName = GarageData.FixNameToPrint(memberName);
+                toDisplay.Append("\r\n " + memberName + " : " + field.GetValue(this));
             }
 
             return toDisplay;

@@ -6,8 +6,8 @@ namespace Ex03.GarageLogic
 {
     public class Electric : Engine
     {
-        private float m_LeftBatteryTime; //inHours
-        private readonly float r_MaxBatteryTime; //inHours
+        private readonly float r_MaxBatteryTime; ////inHours
+        private float m_LeftBatteryTime; ////inHours
 
         public Electric(float i_MaxBatteryTime)
         {
@@ -22,14 +22,15 @@ namespace Ex03.GarageLogic
         internal override void RefillEnergy(float i_MinutesToAdd) 
         {
             float hoursToAdd = i_MinutesToAdd / 60f;
+            float newBatteryTime = m_LeftBatteryTime + hoursToAdd;
 
-            if (r_MaxBatteryTime >= m_LeftBatteryTime + hoursToAdd)
+            if ((hoursToAdd >= 0) && (r_MaxBatteryTime >= newBatteryTime))
             {
-                m_LeftBatteryTime = m_LeftBatteryTime + hoursToAdd;
+                m_LeftBatteryTime = newBatteryTime;
             }
             else
             {
-                throw (new ValueOutOfRangeException("Value is Out Of Range", 0, r_MaxBatteryTime));
+                throw new ValueOutOfRangeException("Value is Out Of Range.", 0, r_MaxBatteryTime);
             }
         }
 
@@ -38,28 +39,25 @@ namespace Ex03.GarageLogic
             StringBuilder toDisplay = new StringBuilder();
             Type vehicleType = GetType();
 
-            foreach (FieldInfo f in vehicleType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            foreach (FieldInfo member in vehicleType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
             {
-                int idx = f.ToString().IndexOf("_");
-                string memberName = f.ToString().Substring(idx + 1);
-                toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
+                string memberName = GarageData.FixNameToPrint(member.Name);
+                toDisplay.Append("\r\n " + memberName + " : " + member.GetValue(this));
             }
 
             return toDisplay;
         }
 
-
         internal override void SetCurrPower(float i_CurrPower)
         {
-            if (i_CurrPower>=0 && i_CurrPower<= r_MaxBatteryTime)
+            if (i_CurrPower >= 0 && i_CurrPower <= r_MaxBatteryTime)
             {
                 m_LeftBatteryTime = i_CurrPower;
             }
             else
             {
-                throw new ValueOutOfRangeException("Value is Out Of Range", 0, r_MaxBatteryTime);
+                throw new ValueOutOfRangeException("Value is Out Of Range.", 0, r_MaxBatteryTime);
             }
         }
-
     }
 }

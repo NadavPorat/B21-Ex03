@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    public class GasMotor:Motorcycle
+    public class GasMotor : Motorcycle
     {
-        public GasMotor(): base(new Gasoline(Gasoline.eGasType.Octan98, 6))
+        public GasMotor() : base(new Gasoline(Gasoline.eGasType.Octan98, 6))
         {
         }
     }

@@ -1,13 +1,10 @@
-﻿using Ex03.GarageLogic;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
-    public class Validation
+    public abstract class Validation
     {
         internal static void IsOnlyDigitsAndLetters(string i_UserInput)
         {
@@ -27,9 +24,9 @@ namespace Ex03.ConsoleUI
 
         internal static void IsInRange(float i_UserInput, float i_From, float i_To)
         {
-            if(i_UserInput < i_From||i_UserInput> i_To)
+            if (i_UserInput < i_From || i_UserInput > i_To)
             {
-                throw new ValueOutOfRangeException("Value Is Not In Options. " ,i_From, i_To);
+                throw new ValueOutOfRangeException("Value Is Not In Options. ", i_From, i_To);
             }
         }
     }

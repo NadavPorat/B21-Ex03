@@ -12,13 +12,13 @@ namespace Ex03.GarageLogic
         {
         }
 
-        public override void SetInfo(FieldInfo i_FieldInfo, Object i_ValueToPut)
+        public override void SetInfo(FieldInfo i_FieldInfo, object i_ValueToPut)
         {
-            if(i_FieldInfo.FieldType.GetTypeInfo()==m_CarColor.GetType())
+            if (i_FieldInfo.FieldType.GetTypeInfo() == m_CarColor.GetType())
             {
                 m_CarColor = (eColor)i_ValueToPut;
             }
-            if(i_FieldInfo.FieldType.GetTypeInfo() == m_NumOfDoors.GetType())
+            else if(i_FieldInfo.FieldType.GetTypeInfo() == m_NumOfDoors.GetType())
             {
                 m_NumOfDoors = (eDoorsNum)i_ValueToPut;
             }
@@ -26,7 +26,7 @@ namespace Ex03.GarageLogic
 
         public enum eColor
         {
-            Red=1,
+            Red = 1,
             Silver,
             White,
             Black
@@ -34,7 +34,7 @@ namespace Ex03.GarageLogic
 
         public enum eDoorsNum
         {
-            Two=1,
+            Two = 1,
             Three,
             Four,
             Five

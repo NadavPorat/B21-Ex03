@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 
-
 namespace Ex03.GarageLogic
 {
     public class Truck : Vehicle
@@ -15,11 +14,11 @@ namespace Ex03.GarageLogic
             m_IsCarryHazardMaterials = null;
         }
 
-        public override void SetInfo(FieldInfo i_FieldInfo, Object i_ValueToPut)
+        public override void SetInfo(FieldInfo i_FieldInfo, object i_ValueToPut)
         {
             if (i_FieldInfo.FieldType == typeof(bool?))
             {
-                m_IsCarryHazardMaterials = (int)i_ValueToPut == 1 ?  true : false;
+                m_IsCarryHazardMaterials = (int)i_ValueToPut == 1 ? true : false;
             }
             else if (i_FieldInfo.FieldType == typeof(float?))
             {

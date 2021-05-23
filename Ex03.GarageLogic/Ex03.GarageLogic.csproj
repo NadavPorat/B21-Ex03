@@ -52,7 +52,9 @@
     <Compile Include="Motorcycle.cs" />
     <Compile Include="Truck.cs" />
     <Compile Include="ValueOutOfRangeException.cs" />
-    <Compile Include="Vehicle.cs" />
+    <Compile Include="Vehicle.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="VehicleInfo.cs" />
     <Compile Include="Wheel.cs" />
   </ItemGroup>

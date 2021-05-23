@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    public class Gasoline: Engine
+    public class Gasoline : Engine
     {
+        private readonly float r_MaxGasAmount;
         private readonly eGasType r_GasType;
         private float m_CurrGasAmount;
-        private readonly float r_MaxGasAmount;
-
+        
         public Gasoline(eGasType i_GasType, float i_MaxGasAmount)
         {
             r_GasType = i_GasType;
@@ -26,11 +26,10 @@ namespace Ex03.GarageLogic
             StringBuilder toDisplay = new StringBuilder();
             Type vehicleType = GetType();
 
-            foreach (FieldInfo f in vehicleType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            foreach (FieldInfo member in vehicleType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
             {
-                int idx = f.ToString().IndexOf("_");
-                string memberName = f.ToString().Substring(idx + 1);
-                toDisplay.Append("\r\n " + memberName + " = " + f.GetValue(this));
+                string memberName = GarageData.FixNameToPrint(member.Name);
+                toDisplay.Append("\r\n " + memberName + " : " + member.GetValue(this));
             }
 
             return toDisplay;
@@ -44,7 +43,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw (new ValueOutOfRangeException("Value is Out Of Range", 0, r_MaxGasAmount));
+                throw new ValueOutOfRangeException("Value is Out Of Range.", 0, r_MaxGasAmount);
             }
         }
 
@@ -56,25 +55,25 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw (new ArgumentException("Wrong Gas Type"));
+                throw new ArgumentException("Wrong Gas Type");
             }
         }
 
         internal override void SetCurrPower(float i_CurrPower)
         {
-            if (i_CurrPower>=0 && i_CurrPower <= r_MaxGasAmount)
+            if (i_CurrPower >= 0 && i_CurrPower <= r_MaxGasAmount)
             {
                 m_CurrGasAmount = i_CurrPower;
             }
             else
             {
-                throw new ValueOutOfRangeException("Value is Out Of Range", 0, r_MaxGasAmount);
+                throw new ValueOutOfRangeException("Value is Out Of Range.", 0, r_MaxGasAmount);
             }
         }
 
         public enum eGasType
         {
-            Octan98=1,
+            Octan98 = 1,
             Octan96,
             Octan95,
             Soler

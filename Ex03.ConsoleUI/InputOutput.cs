@@ -1,12 +1,10 @@
-﻿using Ex03.GarageLogic;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Reflection;
-using System.Text;
+using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
-    public class UI
+    public class InputOutput
     {
         internal void Menu()
         {
@@ -22,7 +20,6 @@ namespace Ex03.ConsoleUI
 6. Charge an electric-based Vehicle
 7. Display Vehicle information
 8. Exit");
-
         }
 
         internal void PrintMsg(string i_ToPrint)
@@ -147,7 +144,7 @@ namespace Ex03.ConsoleUI
         internal void GetInfo(FieldInfo i_Info, ref object io_ChoiseToReturn)
         {
             string fixName;
-            fixName= GarageData.FixNameToPrint(i_Info.Name);
+            fixName = GarageData.FixNameToPrint(i_Info.Name);
 
             string toAskUser = string.Format(@"Please Enter {0} :", fixName);
 
@@ -159,12 +156,13 @@ namespace Ex03.ConsoleUI
             {
                 io_ChoiseToReturn = getNumericInfo(toAskUser);
             }
-            else if (i_Info.FieldType== typeof(bool?))
+            else if (i_Info.FieldType == typeof(bool?))
             {
                 io_ChoiseToReturn = getBoolInfo(toAskUser);
             }
-            else ////Gets Any Info From User-the object class wil handle validation. To support futer members typs.
+            else
             {
+                ////Gets Any Info From User-the object class wil handle validation. To support futer members typs.
                 io_ChoiseToReturn = Console.ReadLine();
             }
         }
@@ -174,13 +172,13 @@ namespace Ex03.ConsoleUI
             bool goodInput = false;
             int choise = 0;
             string userChoise;
-            i_toAskUser += String.Format("\n Choose :\n 1. YES \n 2. No");
+            i_toAskUser += string.Format("\n Choose :\n 1. YES \n 2. No");
             Console.WriteLine(i_toAskUser);
 
             while(!goodInput)
-            { 
-               userChoise = getOnlyDigitsString();
-                choise= int.Parse(userChoise);
+            {
+                userChoise = getOnlyDigitsString();
+                choise = int.Parse(userChoise);
 
                 try
                 {
@@ -227,7 +225,7 @@ namespace Ex03.ConsoleUI
                 {
                     userChoise = getOnlyDigitsString();
                     choise = int.Parse(userChoise);
-                    Validation.IsInRange(choise, 0, numOfOption - 1);
+                    Validation.IsInRange(choise, 1, numOfOption - 1);
                     goodInput = true;
                 }
                 catch (Exception ex)
@@ -251,9 +249,9 @@ namespace Ex03.ConsoleUI
         {
             Console.WriteLine("Please Enter The Energy Amount To Add: ");
             float powerToAdd = getFloatNumber();
-            if(powerToAdd<0)
+            if(powerToAdd < 0)
             {
-                throw new ArgumentException("Amount To Add Must Be Positive");
+                throw new ArgumentException("Amount To Add Must Be Positive.");
             }
 
             return powerToAdd;
@@ -263,11 +261,11 @@ namespace Ex03.ConsoleUI
         {
             string askUserStr = string.Format("Please Enter The ");
 
-            if(i_EngineType== typeof(Gasoline))
+            if(i_EngineType == typeof(Gasoline))
             {
-                askUserStr+=string.Format("Curr Gasoline Amount: ");
+                askUserStr += string.Format("Curr Gasoline Amount: ");
             }
-            else if (i_EngineType==typeof(Electric))
+            else if (i_EngineType == typeof(Electric))
             {
                 askUserStr += string.Format("Power Left Time: ");
             }
@@ -278,8 +276,8 @@ namespace Ex03.ConsoleUI
 
         private string getLettesAndDigitsString(string i_MsgToUser)
         {
-            Console.WriteLine(@"{0}
-", i_MsgToUser);
+            Console.WriteLine(
+@"{0}", i_MsgToUser);
 
             bool goodInput = false;
             string userInput = Console.ReadLine();
@@ -331,5 +329,3 @@ namespace Ex03.ConsoleUI
         }
     }
 }
-
-

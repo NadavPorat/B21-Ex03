@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
@@ -15,6 +13,29 @@ namespace Ex03.GarageLogic
             r_VehicleList = new Dictionary<string, VehicleInfo>();
         }
 
+        public static string FixNameToPrint(string i_Name)
+        {
+            string fixStr = null;
+            int i = 1;
+
+            int idx = i_Name.ToString().IndexOf("_");
+            i_Name = i_Name.ToString().Substring(idx + 1);
+            fixStr += i_Name[0];
+
+            while (i < i_Name.Length)
+            {
+                if (char.IsUpper(i_Name[i]) && char.IsLower(i_Name[i - 1]))
+                {
+                    fixStr += " ";
+                }
+
+                fixStr += i_Name[i];
+                i++;
+            }
+
+            return fixStr;
+        }
+
         public bool Contains(string i_LicenseNumber)
         {
             return r_VehicleList.ContainsKey(i_LicenseNumber);
@@ -24,7 +45,7 @@ namespace Ex03.GarageLogic
         {
             VehicleInfo VehicleInfo = null;
 
-            if( r_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo))
+            if (r_VehicleList.TryGetValue(i_LicenseNumber, out VehicleInfo))
             {
                 return VehicleInfo;
             }
@@ -51,10 +72,11 @@ namespace Ex03.GarageLogic
 
             foreach (VehicleInfo currVale in r_VehicleList.Values)
             {
-                if(countVehicle==0)
+                if(countVehicle == 0)
                 {
-                    listVehicles += ("All Vehicles List: \n");
+                    listVehicles += "All Vehicles List: \n";
                 }
+
                 countVehicle++;
                 listVehicles += string.Format("{0}. {1}\n", countVehicle, currVale.Vehicle.LicensePlate);
             }
@@ -64,25 +86,23 @@ namespace Ex03.GarageLogic
 
         public string GetListLicensePlateByStatus(VehicleInfo.eVehicleStatus i_EVehicleStatus)
         {
-            string listByStatus= null;
+            string listByStatus = null;
             int countVehicle = 0;
 
                 foreach (VehicleInfo currVale in r_VehicleList.Values)
                 {
                     if (currVale.Status.Equals(i_EVehicleStatus))
                     {
-                      if(countVehicle==0)
-                      {
+                    if (countVehicle == 0)
+                    {
                         string fixName = GarageData.FixNameToPrint(i_EVehicleStatus.ToString());
                         listByStatus += string.Format("{0} Vehicles List: \n", fixName);
-
                     }
+
                     countVehicle++;
                     listByStatus += string.Format("{0}. {1}\n", countVehicle, currVale.Vehicle.LicensePlate);
-           
                     }
                 }
-
 
             return listByStatus;
         }
@@ -97,34 +117,14 @@ namespace Ex03.GarageLogic
         {
             VehicleInfo currVehicleInfo = FindVehicle(i_VehicleLicensePlate);
             currVehicleInfo.Vehicle.RefillGas(i_ToAdd, i_GasType);
+            currVehicleInfo.Vehicle.UpdatePowerPercentage();
         }
 
         public void FillElectric(string i_VehicleLicensePlate, float i_ToAdd)
         {
-            FindVehicle(i_VehicleLicensePlate).Vehicle.RefillElctricVehicle(i_ToAdd);
-        }
-
-        public static string FixNameToPrint(string i_Name)
-        {
-            string fixStr = "";
-            int i = 1;
-
-            int idx = i_Name.ToString().IndexOf("_");
-            i_Name = i_Name.ToString().Substring(idx + 1);
-            fixStr += i_Name[0];
-
-            while (i < i_Name.Length)
-            {
-                if (Char.IsUpper(i_Name[i]))
-                {
-                    fixStr += " ";
-                }
-
-                fixStr += i_Name[i];
-                i++;
-            }
-
-            return fixStr;
+            Vehicle currVehicle = FindVehicle(i_VehicleLicensePlate).Vehicle;
+           currVehicle.RefillElctricVehicle(i_ToAdd);
+            currVehicle.UpdatePowerPercentage();
         }
     }
 }

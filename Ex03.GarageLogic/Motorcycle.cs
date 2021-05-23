@@ -13,7 +13,7 @@ namespace Ex03.GarageLogic
             m_EngineCapacity = null;
         }
 
-        public override void SetInfo(FieldInfo i_FieldInfo, Object i_ValueToPut)
+        public override void SetInfo(FieldInfo i_FieldInfo, object i_ValueToPut)
         {
             if (i_FieldInfo.FieldType == m_LicenseType.GetType())
             {
@@ -27,7 +27,7 @@ namespace Ex03.GarageLogic
 
         public enum eLisenceType
         {
-            BB=1,
+            BB = 1,
             AA,
             B1,
             A

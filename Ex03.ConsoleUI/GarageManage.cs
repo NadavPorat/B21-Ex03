@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
 using Ex03.GarageLogic;
 
@@ -10,10 +7,10 @@ namespace Ex03.ConsoleUI
 {
     public class GarageManage
     {
-        private UI m_UI;
+        private InputOutput m_UI;
         private GarageData m_Data;
 
-        public GarageManage(UI i_Ui)
+        public GarageManage(InputOutput i_Ui)
         {
             m_UI = i_Ui;
             m_Data = new GarageData();
@@ -36,36 +33,43 @@ namespace Ex03.ConsoleUI
                                 insertVehicle();
                                 break;
                             }
+
                         case 2:
                             {
                                 displayLicensePlates();
                                 break;
                             }
+
                         case 3:
                             {
                                 changeVehicleStatus();
                                 break;
                             }
+
                         case 4:
                             {
                                 inflateWheelsToMaximum();
                                 break;
                             }
+
                         case 5:
                             {
                                 fillGasVehicle();
                                 break;
                             }
+
                         case 6:
                             {
                                 fillElectricVehicle();
                                 break;
                             }
+
                         case 7:
                             {
                                 displayVehicleInfo();
                                 break;
                             }
+
                         case 8:
                             {
                                 garageOpen = false;
@@ -105,13 +109,13 @@ namespace Ex03.ConsoleUI
                 insertSpecificVehicleDetails(vInfo);
                 insertEngineDetails(vInfo);
                 m_Data.Insert(vInfo);
-                m_UI.PrintMsg("\nThe Vehicle Insert Successfully \n");
+                m_UI.PrintMsg("\nThe Vehicle Inserted Successfully \n");
             }
         }
 
         private void handleAlreadyExistSituation(string i_LicensePlate)
         {
-            m_Data.FindVehicle(i_LicensePlate).SetInProccesStatus();
+            m_Data.FindVehicle(i_LicensePlate).Status = VehicleInfo.eVehicleStatus.InProcces;
         }
 
         private void fillGasVehicle()
@@ -120,7 +124,7 @@ namespace Ex03.ConsoleUI
             Gasoline.eGasType eVehicleGasTypeToFill = m_UI.GetGasTypeToFill();
             float amountToAdd = m_UI.GetEnergyAmountToAdd();
             m_Data.FillGas(vehicleLicensePlate, eVehicleGasTypeToFill, amountToAdd);
-            m_UI.PrintMsg("\nFill Gas Successfully \n");
+            m_UI.PrintMsg("\nnrefuel completed succesfully \n");
         }
 
         private void fillElectricVehicle()
@@ -128,7 +132,7 @@ namespace Ex03.ConsoleUI
             string VehicleLicensePlate = m_UI.GetVehicleLicensePlate();
             float amountToAdd = m_UI.GetEnergyAmountToAdd();
             m_Data.FillElectric(VehicleLicensePlate, amountToAdd);
-            m_UI.PrintMsg("\nFill Electric Successfully \n");
+            m_UI.PrintMsg("\nrefuel completed Successfully \n");
         }
 
         private void insertEngineDetails(VehicleInfo i_VehicleInfo)
@@ -147,23 +151,14 @@ namespace Ex03.ConsoleUI
                     m_UI.AnnounceError(ex);
                 }
             }
-
         }
 
         private void insertVehicleDetails(VehicleInfo i_VehicleInfo)
         {
             foreach(eInfoType info in Enum.GetValues(typeof(eInfoType)))
             {
-                validationLoop(info , i_VehicleInfo);
+                validationLoop(info, i_VehicleInfo);
             }
-        }
-
-        private void changeVehicleStatus()
-        {
-            string licensePlate = m_UI.GetVehicleLicensePlate();
-            VehicleInfo currVehicleInfo = m_Data.FindVehicle(licensePlate);
-            currVehicleInfo.Status = m_UI.GetVehicleNewStatus();
-            m_UI.PrintMsg("\nChange Status Successfully \n");
         }
 
         private void insertSpecificVehicleDetails(VehicleInfo i_VehicleInfo)
@@ -200,7 +195,7 @@ namespace Ex03.ConsoleUI
                                 break;
                             }
 
-                        case eInfoType.CurrWheelsAirPressure :
+                        case eInfoType.CurrWheelsAirPressure:
                             {
                                 i_VehicleInfo.SetWheelsCurrAirPressure(m_UI.GetAirPressure());
                                 break;
@@ -229,10 +224,18 @@ namespace Ex03.ConsoleUI
             }
         }
 
+        private void changeVehicleStatus()
+        {
+            string licensePlate = m_UI.GetVehicleLicensePlate();
+            VehicleInfo currVehicleInfo = m_Data.FindVehicle(licensePlate);
+            currVehicleInfo.Status = m_UI.GetVehicleNewStatus();
+            m_UI.PrintMsg("\nStatus Changed Successfully \n");
+        }
+
         private void inflateWheelsToMaximum()
         {
             m_Data.InflateWheelsToMax(m_UI.GetVehicleLicensePlate());
-            m_UI.PrintMsg("\nInflate Wheels Successfully \n");
+            m_UI.PrintMsg("\nWheels Inflated Successfully\n");
         }
 
         private void displayVehicleInfo()
@@ -255,7 +258,7 @@ namespace Ex03.ConsoleUI
                 outList += m_Data.GetListLicensePlate();
             }
 
-            if(outList.Length==0)
+            if (outList.Length == 0)
             {
                 outList = "No Vehicles In This Status";
             }
